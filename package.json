@@ -1,6 +1,6 @@
 {
   "name": "gpt-ts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A simple HTML5 games prototyping toolset",
   "repository": {
     "type": "git",
@@ -11,11 +11,6 @@
   },
   "homepage": "https://github.com/arfeo/gpt-ts#readme",
   "main": "lib/index.js",
-  "files": [
-    "LICENSE",
-    "index.d.ts",
-    "lib"
-  ],
   "scripts": {
     "build": "rm -rf ./lib && tsc",
     "install": "rm -rf ./lib && tsc",
