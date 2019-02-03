@@ -9,15 +9,15 @@ abstract class GameComponent {
   cellSize: number;
   eventHandlers: IEventHandler;
   storagePrefix: string;
-  init?(): void;
+  init?(...args: any[]): void;
   abstract render(): void;
   unmount?(): void;
 
-  protected constructor() {
+  protected constructor(...args: any[]) {
     this.cellSize = setCellSize(DEFAULT_VMIN_VALUE);
     this.storagePrefix = DEFAULT_STORAGE_PREFIX;
 
-    typeof this.init === 'function' && this.init();
+    typeof this.init === 'function' && this.init(...args);
 
     this.render();
 
