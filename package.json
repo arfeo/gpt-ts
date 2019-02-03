@@ -12,6 +12,7 @@
   "homepage": "https://github.com/arfeo/gpt-ts#readme",
   "main": "lib/index.js",
   "scripts": {
+    "build": "rm -rf ./lib && tsc",
     "install": "rm -rf ./lib && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
