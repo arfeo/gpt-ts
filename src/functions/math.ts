@@ -1,12 +1,12 @@
-import { ILineSegment, IPoint } from '../types/utils';
+import { ILineSegment, IPoint } from '../types';
 
 /**
- * Function returns true if one line segment intersects with another
+ * Returns true if one line segment intersects with another
  *
  * @param segment1
  * @param segment2
  */
-function lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): boolean {
+export function lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): boolean {
   const det: number = (segment1.end.x - segment1.start.x) * (segment2.end.y - segment2.start.y) -
     (segment2.end.x - segment2.start.x) * (segment1.end.y - segment1.start.y);
 
@@ -23,13 +23,13 @@ function lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): 
 }
 
 /**
- * Function checks if a point belongs to a line segment
+ * Checks if a point belongs to a line segment
  *
  * @param segment
  * @param point
  * @param tolerance
  */
-function pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: number): boolean {
+export function pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: number): boolean {
   const dxL: number = segment.end.x - segment.start.x;
   const dyL: number = segment.end.y - segment.start.y;
   const dxP: number = point.x - segment.start.x;
@@ -43,13 +43,13 @@ function pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: num
 }
 
 /**
- * Function checks if a line segment intersects with a rectangle by checking intersection
+ * Checks if a line segment intersects with a rectangle by checking intersection
  * with each of its sides; returns true if at least one intersection registered
  *
  * @param segment
  * @param rectCoords
  */
-function lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number[]): boolean {
+export function lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number[]): boolean {
   const segment1: ILineSegment = {
     start: { x: rectCoords[0], y: rectCoords[1] },
     end: { x: rectCoords[2], y: rectCoords[1] },
@@ -74,9 +74,3 @@ function lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number
     lineSegmentsIntersect(segment, segment4)
   );
 }
-
-export {
-  lineSegmentsIntersect,
-  pointOnLineSegment,
-  lineSegmentIntersectsWithRect,
-};

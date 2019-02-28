@@ -1,5 +1,5 @@
 /**
- * Alias for drawArc, this function draws a circle of the given size and style at the given coordinates
+ * Draws a circle of the given size and style at the given coordinates
  *
  * @param ctx
  * @param dotX
@@ -9,7 +9,7 @@
  * @param edgingWidth
  * @param edgingColor
  */
-function drawCircle(
+export function drawCircle(
   ctx: CanvasRenderingContext2D,
   dotX: number,
   dotY: number,
@@ -18,11 +18,25 @@ function drawCircle(
   edgingWidth?: number,
   edgingColor?: string,
 ) {
-  drawArc(ctx, dotX, dotY, radius, 0, Math.PI * 2, fillStyle, edgingWidth, edgingColor);
+  ctx.beginPath();
+  ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
+
+  if (fillStyle) {
+    ctx.fillStyle = fillStyle;
+
+    ctx.fill();
+  }
+
+  if (edgingWidth) {
+    ctx.lineWidth = edgingWidth;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+
+    ctx.stroke();
+  }
 }
 
 /**
- * Function draws a circle sector at the given coordinates
+ * Draws a circle sector at the given coordinates
  *
  * @param ctx
  * @param dotX
@@ -34,7 +48,7 @@ function drawCircle(
  * @param edgingWidth
  * @param edgingColor
  */
-function drawSector(
+export function drawSector(
   ctx: CanvasRenderingContext2D,
   dotX: number,
   dotY: number,
@@ -66,7 +80,7 @@ function drawSector(
 }
 
 /**
- * Function draws a circle sector at the given coordinates
+ * Draws a circle sector at the given coordinates
  *
  * @param ctx
  * @param cx
@@ -78,7 +92,7 @@ function drawSector(
  * @param edgingWidth
  * @param edgingColor
  */
-function drawArc(
+export function drawArc(
   ctx: CanvasRenderingContext2D,
   cx: number,
   cy: number,
@@ -107,7 +121,7 @@ function drawArc(
 }
 
 /**
- * Function draws a line starting at the given coordinates of the given length at the given angle;
+ * Draws a line starting at the given coordinates of the given length at the given angle;
  * it returns an array of start and end positions of the line
  *
  * @param ctx
@@ -118,7 +132,7 @@ function drawArc(
  * @param strokeStyle
  * @param lineWidth
  */
-function drawLineToAngle(
+export function drawLineToAngle(
   ctx: CanvasRenderingContext2D,
   x1: number,
   y1: number,
@@ -146,7 +160,7 @@ function drawLineToAngle(
 }
 
 /**
- * Function draws a filled rectangle of the given size and style at the given coordinates
+ * Draws a filled rectangle of the given size and style at the given coordinates
  *
  * @param ctx
  * @param left
@@ -157,7 +171,7 @@ function drawLineToAngle(
  * @param edgingWidth
  * @param edgingColor
  */
-function drawRectangle(
+export function drawRectangle(
   ctx: CanvasRenderingContext2D,
   left: number,
   top: number,
@@ -182,7 +196,7 @@ function drawRectangle(
 }
 
 /**
- * Function draws a filled triangle at the given coordinates
+ * Draws a filled triangle at the given coordinates
  *
  * @param ctx
  * @param c1
@@ -192,7 +206,7 @@ function drawRectangle(
  * @param edgingWidth
  * @param edgingColor
  */
-function drawTriangle(
+export function drawTriangle(
   ctx: CanvasRenderingContext2D,
   c1: number[],
   c2: number[],
@@ -222,7 +236,7 @@ function drawTriangle(
 }
 
 /**
- * Function draws a star-like object with the given count of spikes at the given coordinates
+ * Draws a star-like object with the given count of spikes at the given coordinates
  *
  * @param ctx
  * @param cx
@@ -234,7 +248,7 @@ function drawTriangle(
  * @param edgingWidth
  * @param edgingColor
  */
-function drawStar(
+export function drawStar(
   ctx: CanvasRenderingContext2D,
   cx: number,
   cy: number,
@@ -281,13 +295,3 @@ function drawStar(
     ctx.fill();
   }
 }
-
-export {
-  drawCircle,
-  drawSector,
-  drawArc,
-  drawLineToAngle,
-  drawRectangle,
-  drawTriangle,
-  drawStar,
-};

@@ -1,6 +1,6 @@
 {
   "name": "gpt-ts",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A simple HTML5 games prototyping toolset",
   "repository": {
     "type": "git",
@@ -10,21 +10,28 @@
     "url": "https://github.com/arfeo/gpt-ts/issues"
   },
   "homepage": "https://github.com/arfeo/gpt-ts#readme",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "files": [
-    "lib",
+    "dist",
     "index.d.ts",
     "LICENSE"
   ],
   "scripts": {
-    "build": "rm -rf ./lib && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Arfeo.net",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^16.2.3",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-tslint": "^8.1.3",
+    "gulp-uglify": "^3.0.1",
+    "tsify": "^4.0.1",
     "tslint": "^5.12.1",
-    "typescript": "^3.3.1"
+    "typescript": "^3.3.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }

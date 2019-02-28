@@ -1,31 +1,43 @@
-import { DEFAULT_STORAGE_PREFIX } from '../../constants/game';
+import { IEventHandler } from '../../types';
 
-import { setUpEventHandlers, removeEventHandlers } from './events';
-
-import { IEventHandler } from '../../types/global';
-
-abstract class GameComponent {
+export abstract class GameComponent {
   eventHandlers: IEventHandler;
-  storagePrefix: string;
   init?(...args: any[]): void;
   abstract render(): void;
   unmount?(): void;
 
   protected constructor(...args: any[]) {
-    this.storagePrefix = DEFAULT_STORAGE_PREFIX;
-
     typeof this.init === 'function' && this.init(...args);
 
     this.render();
-
-    setUpEventHandlers.call(this);
+    this.setUpEventHandlers.call(this);
   }
 
   destroy() {
     typeof this.unmount === 'function' && this.unmount();
 
-    removeEventHandlers.call(this);
+    this.removeEventHandlers.call(this);
+  }
+
+  /**
+   * Creates all game's event listeners
+   */
+  setUpEventHandlers() {
+    for (const prop in this.eventHandlers) {
+      const handler = this.eventHandlers[prop];
+
+      handler.target.addEventListener(handler.type, handler.listener);
+    }
+  }
+
+  /**
+   * Removes all game's event listeners
+   */
+  removeEventHandlers() {
+    for (const prop in this.eventHandlers) {
+      const handler = this.eventHandlers[prop];
+
+      handler.target.removeEventListener(handler.type, handler.listener);
+    }
   }
 }
-
-export { GameComponent };

@@ -1,9 +1,5 @@
 import { GameComponent } from './components/Game';
 
-import { setCellSize } from './components/Game/utils';
-
-import { getRandomNum } from './utils/common';
-
 import {
   drawCircle,
   drawSector,
@@ -12,24 +8,28 @@ import {
   drawRectangle,
   drawTriangle,
   drawStar,
-} from './utils/drawing';
+} from './functions/draw';
 
 import {
   lineSegmentsIntersect,
   pointOnLineSegment,
   lineSegmentIntersectsWithRect,
-} from './utils/math';
+} from './functions/math';
 
 import {
   getStorageData,
   saveStorageData,
   removeStorageData,
-} from './utils/storage';
+} from './functions/storage';
+
+import {
+  setCellSize,
+  getRandomNum,
+} from './functions/utils';
 
 export {
   GameComponent,
-  setCellSize,
-  getRandomNum,
+
   drawCircle,
   drawSector,
   drawArc,
@@ -37,10 +37,15 @@ export {
   drawRectangle,
   drawTriangle,
   drawStar,
+
   lineSegmentsIntersect,
   pointOnLineSegment,
   lineSegmentIntersectsWithRect,
+
   getStorageData,
   saveStorageData,
   removeStorageData,
+
+  setCellSize,
+  getRandomNum,
 };
