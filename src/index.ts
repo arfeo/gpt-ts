@@ -1,4 +1,5 @@
 import { GameComponent } from './components/Game';
+import { ModalComponent } from './components/Modal';
 
 import {
   drawCircle,
@@ -29,6 +30,7 @@ import {
 
 export {
   GameComponent,
+  ModalComponent,
 
   drawCircle,
   drawSector,

@@ -1,4 +1,4 @@
-import { IEventHandler } from '../../types';
+import { IEventHandler } from '../types';
 
 export abstract class GameComponent {
   eventHandlers: IEventHandler;

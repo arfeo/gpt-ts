@@ -1,12 +1,26 @@
 declare module 'gpt-ts' {
   declare class GameComponent {
+    constructor(...args: any[]): void;
     eventHandlers: IEventHandler;
     init(...args: any[]): void;
-    abstract render(): void;
+    render(): void;
     unmount(): void;
     destroy(): void;
     setUpEventHandlers(): void;
     removeEventHandlers(): void;
+  }
+
+  declare class ModalComponent {
+    constructor(game: GameComponent, text?: string, size?: 'large' | 'medium' | 'small'): void;
+    game: GameComponent;
+    modalContainer: HTMLElement;
+    mask: HTMLElement;
+    modalWindow: HTMLElement;
+    modalClose: HTMLElement;
+    modal: HTMLElement;
+    modalContent: string;
+    render(): void;
+    close(restoreHandlers?: boolean): void;
   }
 
   declare function drawCircle(
