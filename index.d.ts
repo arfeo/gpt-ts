@@ -23,6 +23,13 @@ declare module 'gpt-ts' {
     close(restoreHandlers?: boolean): void;
   }
 
+  declare class HttpDataSource {
+    get(url: string, token: string): Promise<any>;
+    post(url: string, data: any, token: string): Promise<any>;
+    put(url: string, data: any, token: string): Promise<any>;
+    remove(url: string, data: any, token: string): Promise<any>;
+  }
+
   declare function drawCircle(
     ctx: CanvasRenderingContext2D,
     dotX: number,
@@ -128,5 +135,4 @@ declare module 'gpt-ts' {
     x: number;
     y: number;
   }
-
 }

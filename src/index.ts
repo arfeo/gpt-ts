@@ -1,6 +1,8 @@
 import { GameComponent } from './components/Game';
 import { ModalComponent } from './components/Modal';
 
+import { HttpDataSource } from './sources/HttpDataSource';
+
 import {
   drawCircle,
   drawSector,
@@ -31,7 +33,7 @@ import {
 export {
   GameComponent,
   ModalComponent,
-
+  HttpDataSource,
   drawCircle,
   drawSector,
   drawArc,
@@ -39,15 +41,12 @@ export {
   drawRectangle,
   drawTriangle,
   drawStar,
-
   lineSegmentsIntersect,
   pointOnLineSegment,
   lineSegmentIntersectsWithRect,
-
   getStorageData,
   saveStorageData,
   removeStorageData,
-
   setCellSize,
   getRandomNum,
 };

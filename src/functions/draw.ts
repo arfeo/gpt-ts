@@ -36,7 +36,7 @@ export function drawCircle(
 }
 
 /**
- * Draws a circle sector at the given coordinates
+ * Draws a circle sector of the given style at the given coordinates
  *
  * @param ctx
  * @param dotX
@@ -80,7 +80,7 @@ export function drawSector(
 }
 
 /**
- * Draws a circle sector at the given coordinates
+ * Draws an arc of the given style at the given coordinates
  *
  * @param ctx
  * @param cx
