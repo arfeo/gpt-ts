@@ -1,52 +1,25 @@
-import { GameComponent } from './components/Game';
-import { ModalComponent } from './components/Modal';
-
-import { HttpDataSource } from './sources/HttpDataSource';
+import {
+  Draw,
+  Maths,
+  Storage,
+  Utils,
+} from './classes';
 
 import {
-  drawCircle,
-  drawSector,
-  drawArc,
-  drawLineToAngle,
-  drawRectangle,
-  drawTriangle,
-  drawStar,
-} from './functions/draw';
+  GameComponent,
+  ModalComponent,
+} from './components';
 
 import {
-  lineSegmentsIntersect,
-  pointOnLineSegment,
-  lineSegmentIntersectsWithRect,
-} from './functions/math';
-
-import {
-  getStorageData,
-  saveStorageData,
-  removeStorageData,
-} from './functions/storage';
-
-import {
-  setCellSize,
-  getRandomNum,
-} from './functions/utils';
+  HttpDataSource,
+} from './sources/HttpDataSource';
 
 export {
+  Draw,
   GameComponent,
   ModalComponent,
   HttpDataSource,
-  drawCircle,
-  drawSector,
-  drawArc,
-  drawLineToAngle,
-  drawRectangle,
-  drawTriangle,
-  drawStar,
-  lineSegmentsIntersect,
-  pointOnLineSegment,
-  lineSegmentIntersectsWithRect,
-  getStorageData,
-  saveStorageData,
-  removeStorageData,
-  setCellSize,
-  getRandomNum,
+  Maths,
+  Storage,
+  Utils,
 };

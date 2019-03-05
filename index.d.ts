@@ -1,4 +1,102 @@
+import { ILineSegment, IPoint } from "gpt-ts";
+
 declare module 'gpt-ts' {
+  class Draw {
+    static circle(
+      ctx: CanvasRenderingContext2D,
+      dotX: number,
+      dotY: number,
+      radius: number,
+      fillStyle?: string,
+      edgingWidth?: number,
+      edgingColor?: string,
+    ): void;
+
+    static sector(
+      ctx: CanvasRenderingContext2D,
+      dotX: number,
+      dotY: number,
+      radius: number,
+      startAngle: number,
+      endAngle: number,
+      fillStyle?: string,
+      edgingWidth?: number,
+      edgingColor?: string,
+    ): void;
+
+    static arc(
+      ctx: CanvasRenderingContext2D,
+      cx: number,
+      cy: number,
+      radius: number,
+      startAngle: number,
+      endAngle: number,
+      fillStyle?: string,
+      edgingWidth?: number,
+      edgingColor?: string,
+    ): void;
+
+    static lineToAngle(
+      ctx: CanvasRenderingContext2D,
+      x1: number,
+      y1: number,
+      length: number,
+      angle: number,
+      strokeStyle: string,
+      lineWidth: number,
+    ): number[][];
+
+    static rectangle(
+      ctx: CanvasRenderingContext2D,
+      left: number,
+      top: number,
+      width: number,
+      height: number,
+      fillStyle?: string,
+      edgingWidth?: number,
+      edgingColor?: string,
+    ): void;
+
+    static triangle(
+      ctx: CanvasRenderingContext2D,
+      c1: number[],
+      c2: number[],
+      c3: number[],
+      fillStyle?: string,
+      edgingWidth?: number,
+      edgingColor?: string,
+    ): void;
+
+    static star(
+      ctx: CanvasRenderingContext2D,
+      cx: number,
+      cy: number,
+      spikes: number,
+      outerRadius: number,
+      innerRadius: number,
+      fillStyle?: string,
+      edgingWidth?: number,
+      edgingColor?: string,
+    ): void;
+  }
+
+  class Maths {
+    static lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): boolean;
+    static pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: number): boolean;
+    static lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number[]): boolean;
+  }
+
+  class Storage {
+    static getStorageData(key: string): any;
+    static saveStorageData(key: string, data: any): void;
+    static removeStorageData(key: string): void;
+  }
+
+  class Utils {
+    static setCellSize(vmin: number): number;
+    static getRandomNum(min = 1, max = 1, discard: number[] = []): number;
+  }
+
   class GameComponent {
     constructor(...args: any[]): void;
     eventHandlers: IEventHandler;
@@ -29,94 +127,6 @@ declare module 'gpt-ts' {
     put(url: string, data: any, token: string): Promise<any>;
     remove(url: string, data: any, token: string): Promise<any>;
   }
-
-  function drawCircle(
-    ctx: CanvasRenderingContext2D,
-    dotX: number,
-    dotY: number,
-    radius: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  ): void;
-
-  function drawSector(
-    ctx: CanvasRenderingContext2D,
-    dotX: number,
-    dotY: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  ): void;
-
-  function drawArc(
-    ctx: CanvasRenderingContext2D,
-    cx: number,
-    cy: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  ): void;
-
-  function drawLineToAngle(
-    ctx: CanvasRenderingContext2D,
-    x1: number,
-    y1: number,
-    length: number,
-    angle: number,
-    strokeStyle: string,
-    lineWidth: number,
-  ): number[][];
-
-  function drawRectangle(
-    ctx: CanvasRenderingContext2D,
-    left: number,
-    top: number,
-    width: number,
-    height: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  ): void;
-
-  function drawTriangle(
-    ctx: CanvasRenderingContext2D,
-    c1: number[],
-    c2: number[],
-    c3: number[],
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  ): void;
-
-  function drawStar(
-    ctx: CanvasRenderingContext2D,
-    cx: number,
-    cy: number,
-    spikes: number,
-    outerRadius: number,
-    innerRadius: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  ): void;
-
-  function lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): boolean;
-  function pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: number): boolean;
-  function lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number[]): boolean;
-
-  function getStorageData(key: string): any;
-  function saveStorageData(key: string, data: any): void;
-  function removeStorageData(key: string): void;
-
-  function setCellSize(vmin: number): number;
-  function getRandomNum(min = 1, max = 1, discard: number[] = []): number;
 
   interface IEventHandler {
     [key: string]: {
