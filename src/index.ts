@@ -16,10 +16,10 @@ import {
 
 export {
   Draw,
-  GameComponent,
-  ModalComponent,
-  HttpDataSource,
   Maths,
   Storage,
   Utils,
+  GameComponent,
+  ModalComponent,
+  HttpDataSource,
 };
