@@ -10,7 +10,7 @@ interface IMenuItem {
   placeholder?: string;
   action?: {
     type: string;
-    handler: () => void;
+    handler: EventListener;
   }
 }
 
