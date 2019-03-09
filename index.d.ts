@@ -105,6 +105,7 @@ declare module 'gpt-ts' {
   }
 
   class MenuComponent {
+    constructor(...args: any[]): void;
     root: HTMLElement;
     items: IMenuItem[];
     init(): void;
