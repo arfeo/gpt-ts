@@ -1,7 +1,8 @@
 import { GameComponent } from './Game';
+import { MenuComponent } from './Menu';
 
 export abstract class ModalComponent {
-  game: GameComponent;
+  page: GameComponent | MenuComponent;
   modalContainer: HTMLElement;
   mask: HTMLElement;
   modalWindow: HTMLElement;
@@ -10,8 +11,8 @@ export abstract class ModalComponent {
   modalContent: string;
   abstract render(): void;
 
-  protected constructor(game: GameComponent, text?: string, size?: 'large' | 'medium' | 'small') {
-    this.game = game;
+  protected constructor(page: GameComponent | MenuComponent, text?: string, size?: 'large' | 'medium' | 'small') {
+    this.page = page;
 
     this.modalContainer = document.createElement('div');
     this.modalContainer.className = 'modal-container';
@@ -39,7 +40,7 @@ export abstract class ModalComponent {
 
     this.render();
 
-    this.game.removeEventHandlers.call(this.game);
+    this.page.removeEventHandlers.call(this.page);
 
     this.modalClose.addEventListener('click', this.close.bind(this));
   }
@@ -48,7 +49,7 @@ export abstract class ModalComponent {
     this.modalContainer.remove();
 
     if (restoreHandlers) {
-      this.game.setUpEventHandlers.call(this.game);
+      this.page.setUpEventHandlers.call(this.page);
     }
   }
 }
