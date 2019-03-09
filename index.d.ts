@@ -98,9 +98,9 @@ declare module 'gpt-ts' {
   class GameComponent {
     constructor(...args: any[]): void;
     eventHandlers: IEventHandler[];
-    init?(...args: any[]): void;
+    init(...args: any[]): void;
     render(): void;
-    unmount?(): void;
+    unmount(): void;
     destroy(): void;
     setUpEventHandlers(): void;
     removeEventHandlers(): void;
