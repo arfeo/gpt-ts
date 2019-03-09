@@ -8,7 +8,7 @@ interface IMenuItem {
   value?: string;
   label?: string;
   placeholder?: string;
-  action: {
+  action?: {
     type: string;
     handler: () => void;
   }
@@ -83,12 +83,14 @@ abstract class MenuComponent extends GameComponent {
         menuItem.appendChild(elementLabel);
       }
 
-      this.eventHandlers.push({
-        id: item.id,
-        target: menuElement as HTMLElement,
-        type: item.action.type,
-        listener: item.action.handler,
-      });
+      if (item.action) {
+        this.eventHandlers.push({
+          id: item.id,
+          target: menuElement as HTMLElement,
+          type: item.action.type,
+          listener: item.action.handler,
+        });
+      }
     }
   }
 }

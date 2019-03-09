@@ -140,7 +140,7 @@ declare module 'gpt-ts' {
     value?: string;
     label?: string;
     placeholder?: string;
-    action: {
+    action?: {
       type: string;
       handler: () => void;
     }
