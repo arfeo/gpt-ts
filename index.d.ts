@@ -85,9 +85,9 @@ declare module 'gpt-ts' {
   }
 
   class Storage {
-    static getStorageData(key: string): any;
-    static saveStorageData(key: string, data: any): void;
-    static removeStorageData(key: string): void;
+    static getData(key: string): any;
+    static saveData(key: string, data: any): void;
+    static removeData(key: string): void;
   }
 
   class Utils {
