@@ -33,6 +33,8 @@ abstract class MenuComponent extends GameComponent {
 
     menuContainer.className = 'menuContainer';
 
+    this.root.innerHTML = '';
+
     this.root.appendChild(menuContainer);
 
     for (const item of this.items) {
