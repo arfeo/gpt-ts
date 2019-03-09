@@ -18,21 +18,12 @@ abstract class MenuComponent extends GameComponent {
   root: HTMLElement;
   items: IMenuItem[];
 
-  protected constructor(root: HTMLElement, items: IMenuItem[]) {
-    super(root, items);
-  }
-
-  init(...args: any[]) {
-    this.root = args[0];
-    this.items = args[1];
-    this.eventHandlers = [];
-  }
-
   render() {
     const menuContainer: HTMLElement = document.createElement('div');
 
     menuContainer.className = 'menuContainer';
 
+    this.eventHandlers = [];
     this.root.innerHTML = '';
 
     this.root.appendChild(menuContainer);

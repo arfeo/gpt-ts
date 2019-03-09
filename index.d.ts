@@ -102,12 +102,13 @@ declare module 'gpt-ts' {
     render(): void;
     unmount(): void;
     destroy(): void;
-    setUpEventHandlers(): void;
-    removeEventHandlers(): void;
   }
 
   class MenuComponent {
-    constructor(root: HTMLElement, items: IMenuItem[]): void;
+    root: HTMLElement;
+    items: IMenuItem[];
+    init(): void;
+    unmount(): void;
     destroy(): void;
   }
 
