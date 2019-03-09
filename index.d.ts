@@ -1,5 +1,3 @@
-import { ILineSegment, IPoint } from "gpt-ts";
-
 declare module 'gpt-ts' {
   class Draw {
     static circle(
@@ -99,13 +97,18 @@ declare module 'gpt-ts' {
 
   class GameComponent {
     constructor(...args: any[]): void;
-    eventHandlers: IEventHandler;
-    init(...args: any[]): void;
+    eventHandlers: IEventHandler[];
+    init?(...args: any[]): void;
     render(): void;
-    unmount(): void;
+    unmount?(): void;
     destroy(): void;
     setUpEventHandlers(): void;
     removeEventHandlers(): void;
+  }
+
+  class MenuComponent {
+    constructor(root: HTMLElement, items: IMenuItem[]): void;
+    destroy(): void;
   }
 
   class ModalComponent {
@@ -128,12 +131,25 @@ declare module 'gpt-ts' {
     remove(url: string, data: any, token: string): Promise<any>;
   }
 
-  interface IEventHandler {
-    [key: string]: {
-      target: HTMLElement;
+  interface IMenuItem {
+    id: number;
+    type: 'button' | 'checkbox' | 'html' | 'radio' | 'text';
+    name?: string;
+    className?: string;
+    value?: string;
+    label?: string;
+    placeholder?: string;
+    action: {
       type: string;
-      listener: EventListener;
+      handler: () => void;
     }
+  }
+
+  export interface IEventHandler {
+    id: number;
+    target: HTMLElement;
+    type: string;
+    listener: EventListener;
   }
 
   interface ILineSegment {
