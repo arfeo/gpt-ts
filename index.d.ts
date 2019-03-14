@@ -97,22 +97,22 @@ declare module 'gpt-ts' {
 
   class GameComponent<T = {}> {
     constructor(...args: any[]): void;
+    services: T;
     eventHandlers: IEventHandler[];
     init(...args: any[]): void;
     render(): void;
     unmount(): void;
     destroy(): void;
-    services: T;
   }
 
   class MenuComponent<T = {}> {
     constructor(...args: any[]): void;
+    services: T;
     root: HTMLElement;
     items: IMenuItem[];
     init(): void;
     unmount(): void;
     destroy(): void;
-    services: T;
   }
 
   class ModalComponent {

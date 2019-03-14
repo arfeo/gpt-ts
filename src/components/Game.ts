@@ -1,11 +1,11 @@
 import { IEventHandler } from '../types';
 
 export abstract class GameComponent<T = {}> {
+  services: T;
   eventHandlers: IEventHandler[];
   init?(...args: any[]): void;
   abstract render(): void;
   unmount?(): void;
-  services: T;
 
   protected constructor(...args: any[]) {
     typeof this.init === 'function' && this.init(...args);
