@@ -95,22 +95,24 @@ declare module 'gpt-ts' {
     static getRandomNum(min = 1, max = 1, discard: number[] = []): number;
   }
 
-  class GameComponent {
+  class GameComponent<T = {}> {
     constructor(...args: any[]): void;
     eventHandlers: IEventHandler[];
     init(...args: any[]): void;
     render(): void;
     unmount(): void;
     destroy(): void;
+    services: T;
   }
 
-  class MenuComponent {
+  class MenuComponent<T = {}> {
     constructor(...args: any[]): void;
     root: HTMLElement;
     items: IMenuItem[];
     init(): void;
     unmount(): void;
     destroy(): void;
+    services: T;
   }
 
   class ModalComponent {

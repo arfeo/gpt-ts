@@ -14,7 +14,7 @@ interface IMenuItem {
   }
 }
 
-abstract class MenuComponent extends GameComponent {
+abstract class MenuComponent<T = {}> extends GameComponent<T> {
   root: HTMLElement;
   items: IMenuItem[];
 
