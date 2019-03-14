@@ -1,6 +1,6 @@
 export class HttpDataSource {
   get(url: string, token = ''): Promise<any> {
-    return this.send(encodeURI(url), 'GET', {}, token);
+    return this.send(encodeURI(url), 'GET', null, token);
   }
 
   post(url: string, data = {}, token = ''): Promise<any> {
