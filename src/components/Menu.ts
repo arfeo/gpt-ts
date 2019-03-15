@@ -2,7 +2,7 @@ import { GameComponent } from './Game';
 
 interface IMenuItem {
   id: number;
-  type: 'button' | 'checkbox' | 'html' | 'radio' | 'text';
+  type: 'button' | 'checkbox' | 'html' | 'radio' | 'text' | 'password';
   name?: string;
   className?: string;
   value?: string;
@@ -39,7 +39,8 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
 
       switch (item.type) {
         case 'button':
-        case 'text': {
+        case 'text':
+        case 'password': {
           menuElement = document.createElement('input');
 
           menuElement.type = item.type;

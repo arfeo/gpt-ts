@@ -137,7 +137,7 @@ declare module 'gpt-ts' {
 
   interface IMenuItem {
     id: number;
-    type: 'button' | 'checkbox' | 'html' | 'radio' | 'text';
+    type: 'button' | 'checkbox' | 'html' | 'radio' | 'text' | 'password';
     name?: string;
     className?: string;
     value?: string;
