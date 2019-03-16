@@ -2,12 +2,14 @@ import { GameComponent } from './Game';
 
 interface IMenuItem {
   id: number;
-  type: 'button' | 'checkbox' | 'html' | 'radio' | 'text' | 'password';
+  type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'text';
   name?: string;
   className?: string;
   value?: string;
   label?: string;
   placeholder?: string;
+  checked?: boolean;
+  autocomplete?: string;
   action?: {
     type: string;
     handler: EventListener;
@@ -43,13 +45,29 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
         case 'password': {
           menuElement = document.createElement('input');
 
+          menuElement.id = `${item.type}-${item.id}`;
           menuElement.type = item.type;
-          menuElement.name = item.name || '';
-          menuElement.className = item.className || '';
-          menuElement.value = item.value || '';
 
-          if (item.type === 'text') {
-            menuElement.placeholder = item.placeholder || '';
+          if (item.name) {
+            menuElement.name = item.name;
+          }
+
+          if (item.value) {
+            menuElement.value = item.value;
+          }
+
+          if (item.className) {
+            menuElement.className = item.className;
+          }
+
+          if (item.type !== 'button') {
+            if (item.placeholder) {
+              menuElement.placeholder = item.placeholder;
+            }
+
+            if (item.autocomplete) {
+              menuElement.autocomplete = item.autocomplete;
+            }
           }
           break;
         }
@@ -59,8 +77,18 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
 
           menuElement.id = `${item.type}-${item.id}`;
           menuElement.type = item.type;
-          menuElement.name = item.name || '';
-          menuElement.className = item.className || '';
+
+          if (item.name) {
+            menuElement.name = item.name;
+          }
+
+          if (item.className) {
+            menuElement.className = item.className;
+          }
+
+          if (item.checked) {
+            menuElement.checked = item.checked;
+          }
 
           elementLabel = document.createElement('label');
 
@@ -71,7 +99,14 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
         case 'html': {
           menuElement = document.createElement('div');
 
-          menuElement.className = item.className || '';
+          if (item.value) {
+            menuElement.value = item.value;
+          }
+
+          if (item.className) {
+            menuElement.className = item.className;
+          }
+
           menuElement.innerHTML = item.value || '';
           break;
         }

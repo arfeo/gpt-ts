@@ -137,12 +137,14 @@ declare module 'gpt-ts' {
 
   interface IMenuItem {
     id: number;
-    type: 'button' | 'checkbox' | 'html' | 'radio' | 'text' | 'password';
+    type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'text';
     name?: string;
     className?: string;
     value?: string;
     label?: string;
     placeholder?: string;
+    checked?: boolean;
+    autocomplete?: string;
     action?: {
       type: string;
       handler: EventListener;
