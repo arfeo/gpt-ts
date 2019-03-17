@@ -129,10 +129,11 @@ declare module 'gpt-ts' {
   }
 
   class HttpDataSource {
-    get(url: string, token: string): Promise<any>;
-    post(url: string, data: any, token: string): Promise<any>;
-    put(url: string, data: any, token: string): Promise<any>;
-    remove(url: string, data: any, token: string): Promise<any>;
+    constructor(token?: string): void;
+    get(url: string): Promise<any>;
+    post(url: string, data: any): Promise<any>;
+    put(url: string, data: any): Promise<any>;
+    remove(url: string, data: any): Promise<any>;
   }
 
   interface IMenuItem {

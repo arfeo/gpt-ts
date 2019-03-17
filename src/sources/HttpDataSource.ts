@@ -1,26 +1,32 @@
 export class HttpDataSource {
-  get(url: string, token = ''): Promise<any> {
-    return this.send(encodeURI(url), 'GET', null, token);
+  token: string;
+
+  constructor(token?: string) {
+    this.token = token || '';
   }
 
-  post(url: string, data = {}, token = ''): Promise<any> {
-    return this.send(encodeURI(url), 'POST', data, token);
+  get(url: string): Promise<any> {
+    return this.send(encodeURI(url), 'GET');
   }
 
-  put(url: string, data = {}, token = ''): Promise<any> {
-    return this.send(encodeURI(url), 'PUT', data, token);
+  post(url: string, data = {}): Promise<any> {
+    return this.send(encodeURI(url), 'POST', data);
   }
 
-  remove(url: string, data = {}, token = ''): Promise<any> {
-    return this.send(encodeURI(url), 'DELETE', data, token);
+  put(url: string, data = {}): Promise<any> {
+    return this.send(encodeURI(url), 'PUT', data);
   }
 
-  private send(url: string, method = 'POST', data?: any, token?: string): Promise<any> {
+  remove(url: string, data = {}): Promise<any> {
+    return this.send(encodeURI(url), 'DELETE', data);
+  }
+
+  private send(url: string, method = 'POST', data?: any): Promise<any> {
     return fetch(url, {
       method,
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
-        Authorization: token,
+        Authorization: this.token,
       },
       body: data && JSON.stringify(data),
     }).then(this.response);
