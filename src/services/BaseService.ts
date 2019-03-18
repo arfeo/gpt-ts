@@ -1,7 +1,7 @@
-import { HttpDataSource } from '..';
+import { HttpDataSource, IHttpDataSource } from '..';
 
 export class BaseService {
-  protected http: HttpDataSource;
+  protected http: IHttpDataSource;
 
   constructor(token?: string) {
     this.http = new HttpDataSource(token || '');
