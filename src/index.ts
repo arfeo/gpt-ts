@@ -14,7 +14,12 @@ import {
 
 import {
   HttpDataSource,
+  IHttpDataSource,
 } from './sources/HttpDataSource';
+
+import {
+  BaseService,
+} from './services/BaseService';
 
 import {
   IEventHandler,
@@ -32,6 +37,8 @@ export {
   IMenuItem,
   ModalComponent,
   HttpDataSource,
+  IHttpDataSource,
+  BaseService,
   IEventHandler,
   ILineSegment,
   IPoint,

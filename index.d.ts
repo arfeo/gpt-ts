@@ -128,8 +128,13 @@ declare module 'gpt-ts' {
     close(restoreHandlers?: boolean): void;
   }
 
-  class HttpDataSource {
+  class BaseService {
     constructor(token?: string): void;
+    http: IHttpDataSource;
+  }
+
+  interface IHttpDataSource {
+    token: string;
     get(url: string): Promise<any>;
     post(url: string, data: any): Promise<any>;
     put(url: string, data: any): Promise<any>;
@@ -152,7 +157,7 @@ declare module 'gpt-ts' {
     }
   }
 
-  export interface IEventHandler {
+  interface IEventHandler {
     id: number;
     target: HTMLElement;
     type: string;
