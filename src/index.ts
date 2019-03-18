@@ -9,6 +9,8 @@ import {
   GameComponent,
   MenuComponent,
   IMenuItem,
+  IMenuItemOption,
+  IMenuItemAction,
   ModalComponent,
 } from './components';
 
@@ -35,6 +37,8 @@ export {
   GameComponent,
   MenuComponent,
   IMenuItem,
+  IMenuItemOption,
+  IMenuItemAction,
   ModalComponent,
   HttpDataSource,
   IHttpDataSource,

@@ -2,7 +2,7 @@ import { GameComponent } from './Game';
 
 interface IMenuItem {
   id: number;
-  type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'text';
+  type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
   name?: string;
   className?: string;
   value?: string;
@@ -10,10 +10,20 @@ interface IMenuItem {
   placeholder?: string;
   checked?: boolean;
   autocomplete?: string;
-  action?: {
-    type: string;
-    handler: EventListener;
-  }
+  options?: IMenuItemOption[];
+  action?: IMenuItemAction;
+}
+
+interface IMenuItemOption {
+  value: string;
+  text: string;
+  label?: string;
+  selected?: boolean;
+}
+
+interface IMenuItemAction {
+  type: string;
+  handler: EventListener;
 }
 
 abstract class MenuComponent<T = {}> extends GameComponent<T> {
@@ -32,7 +42,7 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
 
     for (const item of this.items) {
       const menuItem: HTMLElement = document.createElement('div');
-      let menuElement: Partial<HTMLDivElement & HTMLInputElement>;
+      let menuElement: Partial<HTMLInputElement>;
       let elementLabel: HTMLLabelElement;
 
       menuItem.className = 'menuItem';
@@ -45,7 +55,6 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
         case 'password': {
           menuElement = document.createElement('input');
 
-          menuElement.id = `${item.type}-${item.id}`;
           menuElement.type = item.type;
 
           if (item.name) {
@@ -75,7 +84,6 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
         case 'radio': {
           menuElement = document.createElement('input');
 
-          menuElement.id = `${item.type}-${item.id}`;
           menuElement.type = item.type;
 
           if (item.name) {
@@ -96,6 +104,25 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
           elementLabel.innerHTML = item.label || '';
           break;
         }
+        case 'select': {
+          menuElement = document.createElement('select');
+
+          for (const opt of item.options) {
+            const option: HTMLOptionElement = document.createElement('option');
+
+            option.value = opt.value;
+            option.text = opt.text;
+
+            if (opt.label) {
+              option.label = opt.label;
+            }
+            
+            option.selected = opt.selected || false;
+
+            menuElement.appendChild(option);
+          }
+          break;
+        }
         case 'html': {
           menuElement = document.createElement('div');
 
@@ -112,6 +139,8 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
         }
         default: break;
       }
+
+      menuElement.id = `${item.type}-${item.id}`;
 
       menuItem.appendChild(menuElement as Node);
 
@@ -131,4 +160,4 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
   }
 }
 
-export { MenuComponent, IMenuItem };
+export { MenuComponent, IMenuItem, IMenuItemOption, IMenuItemAction };
