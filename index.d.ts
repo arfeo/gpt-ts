@@ -115,9 +115,9 @@ declare module 'gpt-ts' {
     destroy(): void;
   }
 
-  class ModalComponent {
-    constructor(page: GameComponent | MenuComponent, text?: string, size?: 'large' | 'medium' | 'small'): void;
-    game: GameComponent;
+  class ModalComponent<T = {}> {
+    constructor(page: GameComponent<T> | MenuComponent<T>, text?: string, size?: 'large' | 'medium' | 'small'): void;
+    page: GameComponent<T> | MenuComponent<T>;
     modalContainer: HTMLElement;
     mask: HTMLElement;
     modalWindow: HTMLElement;

@@ -1,7 +1,7 @@
 {
   "name": "gpt-ts",
-  "version": "0.6.11",
-  "description": "A simple HTML5 game prototyping toolset",
+  "version": "0.6.12",
+  "description": "Simple HTML5 game prototyping toolset",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arfeo/gpt-ts.git"

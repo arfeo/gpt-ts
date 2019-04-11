@@ -1,8 +1,8 @@
 import { GameComponent } from './Game';
 import { MenuComponent } from './Menu';
 
-export abstract class ModalComponent {
-  page: GameComponent | MenuComponent;
+export abstract class ModalComponent<T = {}> {
+  page: GameComponent<T> | MenuComponent<T>;
   modalContainer: HTMLElement;
   mask: HTMLElement;
   modalWindow: HTMLElement;
@@ -11,7 +11,11 @@ export abstract class ModalComponent {
   modalContent: string;
   abstract render(): void;
 
-  protected constructor(page: GameComponent | MenuComponent, text?: string, size?: 'large' | 'medium' | 'small') {
+  protected constructor(
+    page: GameComponent<T> | MenuComponent<T>,
+    text?: string,
+    size?: 'large' | 'medium' | 'small'
+  ) {
     this.page = page;
 
     this.modalContainer = document.createElement('div');
