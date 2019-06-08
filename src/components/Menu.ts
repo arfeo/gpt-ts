@@ -1,7 +1,7 @@
 import { GameComponent } from './Game';
 
 interface IMenuItem {
-  id: number;
+  id?: string;
   type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
   name?: string;
   className?: string;
@@ -65,10 +65,6 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
             menuElement.value = item.value;
           }
 
-          if (item.className) {
-            menuElement.className = item.className;
-          }
-
           if (item.type !== 'button') {
             if (item.placeholder) {
               menuElement.placeholder = item.placeholder;
@@ -88,10 +84,6 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
 
           if (item.name) {
             menuElement.name = item.name;
-          }
-
-          if (item.className) {
-            menuElement.className = item.className;
           }
 
           if (item.checked) {
@@ -130,17 +122,19 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
             menuElement.value = item.value;
           }
 
-          if (item.className) {
-            menuElement.className = item.className;
-          }
-
           menuElement.innerHTML = item.value || '';
           break;
         }
         default: break;
       }
 
-      menuElement.id = `${item.type}-${item.id}`;
+      if (item.id) {
+        menuElement.id = item.id;
+      }
+
+      if (item.className) {
+        menuElement.className = item.className;
+      }
 
       menuItem.appendChild(menuElement as Node);
 
@@ -150,7 +144,6 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
 
       if (item.action) {
         this.eventHandlers.push({
-          id: item.id,
           target: menuElement as HTMLElement,
           type: item.action.type,
           listener: item.action.handler,

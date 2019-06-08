@@ -142,7 +142,7 @@ declare module 'gpt-ts' {
   }
 
   interface IMenuItem {
-    id: number;
+    id?: string;
     type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
     name?: string;
     className?: string;
@@ -168,7 +168,6 @@ declare module 'gpt-ts' {
   }
 
   interface IEventHandler {
-    id: number;
     target: HTMLElement;
     type: string;
     listener: EventListener;

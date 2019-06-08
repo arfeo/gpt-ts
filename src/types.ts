@@ -1,5 +1,4 @@
 export interface IEventHandler {
-  id: number;
   target: HTMLElement;
   type: string;
   listener: EventListener;
