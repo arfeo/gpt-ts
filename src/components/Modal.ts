@@ -67,16 +67,12 @@ export abstract class ModalComponent<T = {}> {
     return Promise.resolve();
   }
 
-  destroy() {
+  close(restoreHandlers = true) {
     typeof this.unmount === 'function' && this.unmount();
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
       this.removeEventHandlers();
     }
-  }
-
-  close(restoreHandlers = true) {
-    this.destroy();
 
     this.modalContainer.remove();
 

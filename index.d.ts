@@ -128,7 +128,6 @@ declare module 'gpt-ts' {
     init(...args: any[]): void;
     render(): void;
     unmount(): void;
-    destroy(): void;
     close(restoreHandlers?: boolean): void;
   }
 
