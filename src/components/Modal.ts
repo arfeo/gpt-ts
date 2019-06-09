@@ -1,6 +1,8 @@
 import { GameComponent } from './Game';
 import { MenuComponent } from './Menu';
 
+import { IEventHandler } from '../types';
+
 export abstract class ModalComponent<T = {}> {
   page: GameComponent<T> | MenuComponent<T>;
   modalContainer: HTMLElement;
@@ -9,12 +11,16 @@ export abstract class ModalComponent<T = {}> {
   modalClose: HTMLElement;
   modal: HTMLElement;
   modalContent: string;
+  eventHandlers: IEventHandler[];
+  init?(...args: any[]): void;
   abstract render(): void;
+  unmount?(): void;
 
   protected constructor(
     page: GameComponent<T> | MenuComponent<T>,
     text?: string,
-    size?: 'large' | 'medium' | 'small'
+    size?: 'large' | 'medium' | 'small',
+    ...args: any[]
   ) {
     this.page = page;
 
@@ -42,18 +48,52 @@ export abstract class ModalComponent<T = {}> {
 
     this.modalContent = text || '';
 
-    this.render();
-
     this.page.removeEventHandlers.call(this.page);
 
     this.modalClose.addEventListener('click', this.close.bind(this));
+
+    this.beforeMount(...args).then(() => {
+      typeof this.render === 'function' && this.render();
+
+      if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
+        this.setUpEventHandlers();
+      }
+    });
+  }
+
+  async beforeMount(...args: any[]): Promise<void> {
+    typeof this.init === 'function' && await this.init(...args);
+
+    return Promise.resolve();
+  }
+
+  destroy() {
+    typeof this.unmount === 'function' && this.unmount();
+
+    if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
+      this.removeEventHandlers();
+    }
   }
 
   close(restoreHandlers = true) {
+    this.destroy();
+
     this.modalContainer.remove();
 
     if (restoreHandlers) {
       this.page.setUpEventHandlers.call(this.page);
+    }
+  }
+
+  setUpEventHandlers() {
+    for (const prop of this.eventHandlers) {
+      prop.target.addEventListener(prop.type, prop.listener);
+    }
+  }
+
+  removeEventHandlers() {
+    for (const prop of this.eventHandlers) {
+      prop.target.removeEventListener(prop.type, prop.listener);
     }
   }
 }

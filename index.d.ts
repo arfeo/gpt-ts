@@ -116,7 +116,7 @@ declare module 'gpt-ts' {
   }
 
   class ModalComponent<T = {}> {
-    constructor(page: GameComponent<T> | MenuComponent<T>, text?: string, size?: 'large' | 'medium' | 'small'): void;
+    constructor(page: GameComponent<T> | MenuComponent<T>, text?: string, size?: 'large' | 'medium' | 'small', ...args: any[]): void;
     page: GameComponent<T> | MenuComponent<T>;
     modalContainer: HTMLElement;
     mask: HTMLElement;
@@ -124,7 +124,11 @@ declare module 'gpt-ts' {
     modalClose: HTMLElement;
     modal: HTMLElement;
     modalContent: string;
+    eventHandlers: IEventHandler[];
+    init(...args: any[]): void;
     render(): void;
+    unmount(): void;
+    destroy(): void;
     close(restoreHandlers?: boolean): void;
   }
 

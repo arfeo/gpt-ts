@@ -31,18 +31,12 @@ export abstract class GameComponent<T = {}> {
     }
   }
 
-  /**
-   * Creates all game's event listeners
-   */
   setUpEventHandlers() {
     for (const prop of this.eventHandlers) {
       prop.target.addEventListener(prop.type, prop.listener);
     }
   }
 
-  /**
-   * Removes all game's event listeners
-   */
   removeEventHandlers() {
     for (const prop of this.eventHandlers) {
       prop.target.removeEventListener(prop.type, prop.listener);
