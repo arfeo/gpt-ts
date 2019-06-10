@@ -1,6 +1,6 @@
 import { HttpDataSource, IHttpDataSource } from '..';
 
-export class BaseService {
+export class HttpService {
   protected http: IHttpDataSource;
 
   constructor(token?: string) {

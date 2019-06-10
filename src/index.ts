@@ -17,12 +17,13 @@ import {
 import {
   HttpDataSource,
   IHttpDataSource,
-} from './sources/HttpDataSource';
+  WsDataSource,
+  IWsDataSource,
+} from './sources';
 
 import {
-  BaseService,
+  HttpService,
   WsService,
-  IWsService,
 } from './services';
 
 import {
@@ -44,9 +45,10 @@ export {
   ModalComponent,
   HttpDataSource,
   IHttpDataSource,
-  BaseService,
+  WsDataSource,
+  IWsDataSource,
+  HttpService,
   WsService,
-  IWsService,
   IEventHandler,
   ILineSegment,
   IPoint,

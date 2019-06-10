@@ -1,8 +1,7 @@
-import { BaseService } from './BaseService';
-import { WsService, IWsService } from './WsService';
+import { HttpService } from './HttpService';
+import { WsService } from './WsService';
 
 export {
-  BaseService,
+  HttpService,
   WsService,
-  IWsService,
 };

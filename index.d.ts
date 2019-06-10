@@ -131,14 +131,14 @@ declare module 'gpt-ts' {
     close(restoreHandlers?: boolean): void;
   }
 
-  class BaseService {
+  class HttpService {
     constructor(token?: string): void;
     http: IHttpDataSource;
   }
 
   class WsService {
     constructor(uri: string, updateState: (event?: MessageEvent) => void): void;
-    send(data: string): void;
+    ws: IWsDataSource;
   }
 
   interface IHttpDataSource {
@@ -149,7 +149,11 @@ declare module 'gpt-ts' {
     remove(url: string, data: any): Promise<any>;
   }
 
-  interface IWsService {
+  interface IWsDataSource {
+    onOpen(event: Event): void;
+    onClose(event: Event): void;
+    onMessage(event: Event): void;
+    onError(event: Event): void;
     send(data: string): void;
   }
 
