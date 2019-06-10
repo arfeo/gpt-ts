@@ -21,7 +21,9 @@ import {
 
 import {
   BaseService,
-} from './services/BaseService';
+  WsService,
+  IWsService,
+} from './services';
 
 import {
   IEventHandler,
@@ -43,6 +45,8 @@ export {
   HttpDataSource,
   IHttpDataSource,
   BaseService,
+  WsService,
+  IWsService,
   IEventHandler,
   ILineSegment,
   IPoint,

@@ -136,12 +136,21 @@ declare module 'gpt-ts' {
     http: IHttpDataSource;
   }
 
+  class WsService {
+    constructor(uri: string, updateState: (event?: MessageEvent) => void): void;
+    send(data: string): void;
+  }
+
   interface IHttpDataSource {
     token: string;
     get(url: string): Promise<any>;
     post(url: string, data: any): Promise<any>;
     put(url: string, data: any): Promise<any>;
     remove(url: string, data: any): Promise<any>;
+  }
+
+  interface IWsService {
+    send(data: string): void;
   }
 
   interface IMenuItem {
