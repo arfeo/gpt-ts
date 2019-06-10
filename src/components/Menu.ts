@@ -30,12 +30,20 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
   root: HTMLElement;
   items: IMenuItem[];
 
+  async beforeMount(...args: any[]): Promise<void> {
+    this.eventHandlers = [];
+    this.items = [];
+
+    typeof this.init === 'function' && await this.init(...args);
+
+    return Promise.resolve();
+  }
+
   render() {
     const menuContainer: HTMLElement = document.createElement('div');
 
     menuContainer.className = 'menuContainer';
 
-    this.eventHandlers = [];
     this.root.innerHTML = '';
 
     this.root.appendChild(menuContainer);
