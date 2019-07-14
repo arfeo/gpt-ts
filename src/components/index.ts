@@ -1,12 +1,23 @@
-import { GameComponent } from './Game';
-import { MenuComponent, IMenuItem, IMenuItemOption, IMenuItemAction } from './Menu';
-import { ModalComponent } from './Modal';
+import {
+  GameComponent,
+} from './Game';
+
+import {
+  MenuComponent,
+  MenuItem,
+  MenuItemOption,
+  MenuItemAction,
+} from './Menu';
+
+import {
+  ModalComponent,
+} from './Modal';
 
 export {
   GameComponent,
   MenuComponent,
-  IMenuItem,
-  IMenuItemOption,
-  IMenuItemAction,
+  MenuItem,
+  MenuItemOption,
+  MenuItemAction,
   ModalComponent,
 };

@@ -1,8 +1,8 @@
-import { IEventHandler } from '../types';
+import { EventHandler } from '../types';
 
 export abstract class GameComponent<T = {}> {
   services: T;
-  eventHandlers: IEventHandler[];
+  eventHandlers: EventHandler[];
   init?(...args: any[]): void;
   abstract render(): void;
   unmount?(): void;

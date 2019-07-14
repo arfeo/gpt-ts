@@ -1,13 +1,14 @@
-declare module 'gpt-ts' {
+export = Gpt;
+export as namespace Gpt;
+
+declare namespace Gpt {
   class Draw {
     static circle(
       ctx: CanvasRenderingContext2D,
       dotX: number,
       dotY: number,
       radius: number,
-      fillStyle?: string,
-      edgingWidth?: number,
-      edgingColor?: string,
+      options: DrawCircleOptions,
     ): void;
 
     static sector(
@@ -17,9 +18,7 @@ declare module 'gpt-ts' {
       radius: number,
       startAngle: number,
       endAngle: number,
-      fillStyle?: string,
-      edgingWidth?: number,
-      edgingColor?: string,
+      options: DrawSectorOptions,
     ): void;
 
     static arc(
@@ -29,9 +28,7 @@ declare module 'gpt-ts' {
       radius: number,
       startAngle: number,
       endAngle: number,
-      fillStyle?: string,
-      edgingWidth?: number,
-      edgingColor?: string,
+      options: DrawArcOptions,
     ): void;
 
     static lineToAngle(
@@ -40,8 +37,7 @@ declare module 'gpt-ts' {
       y1: number,
       length: number,
       angle: number,
-      strokeStyle: string,
-      lineWidth: number,
+      options: DrawLineToAngleOptions,
     ): number[][];
 
     static rectangle(
@@ -50,9 +46,7 @@ declare module 'gpt-ts' {
       top: number,
       width: number,
       height: number,
-      fillStyle?: string,
-      edgingWidth?: number,
-      edgingColor?: string,
+      options: DrawRectangleOptions,
     ): void;
 
     static triangle(
@@ -60,9 +54,7 @@ declare module 'gpt-ts' {
       c1: number[],
       c2: number[],
       c3: number[],
-      fillStyle?: string,
-      edgingWidth?: number,
-      edgingColor?: string,
+      options: DrawTriangleOptions,
     ): void;
 
     static star(
@@ -72,16 +64,14 @@ declare module 'gpt-ts' {
       spikes: number,
       outerRadius: number,
       innerRadius: number,
-      fillStyle?: string,
-      edgingWidth?: number,
-      edgingColor?: string,
+      options: DrawStarOptions,
     ): void;
   }
 
   class Maths {
-    static lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): boolean;
-    static pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: number): boolean;
-    static lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number[]): boolean;
+    static lineSegmentsIntersect(segment1: LineSegment, segment2: LineSegment): boolean;
+    static pointOnLineSegment(segment: LineSegment, point: Point, tolerance: number): boolean;
+    static lineSegmentIntersectsWithRect(segment: LineSegment, rectCoords: number[]): boolean;
   }
 
   class Storage {
@@ -98,7 +88,7 @@ declare module 'gpt-ts' {
   class GameComponent<T = {}> {
     constructor(...args: any[]): void;
     services: T;
-    eventHandlers: IEventHandler[];
+    eventHandlers: EventHandler[];
     init(...args: any[]): void;
     render(): void;
     unmount(): void;
@@ -109,7 +99,7 @@ declare module 'gpt-ts' {
     constructor(...args: any[]): void;
     services: T;
     root: HTMLElement;
-    items: IMenuItem[];
+    items: MenuItem[];
     init(): void;
     unmount(): void;
     destroy(): void;
@@ -124,7 +114,7 @@ declare module 'gpt-ts' {
     modalClose: HTMLElement;
     modal: HTMLElement;
     modalContent: string;
-    eventHandlers: IEventHandler[];
+    eventHandlers: EventHandler[];
     init(...args: any[]): void;
     render(): void;
     unmount(): void;
@@ -133,31 +123,78 @@ declare module 'gpt-ts' {
 
   class HttpService {
     constructor(token?: string): void;
-    http: IHttpDataSource;
+    http: {
+      token: string;
+      get(url: string): Promise<any>;
+      post(url: string, data: any): Promise<any>;
+      put(url: string, data: any): Promise<any>;
+      remove(url: string, data: any): Promise<any>;
+    };
   }
 
   class WsService {
     constructor(uri: string, updateState: (event?: MessageEvent) => void): void;
-    ws: IWsDataSource;
+    ws: {
+      onOpen(event: Event): void;
+      onClose(event: Event): void;
+      onMessage(event: Event): void;
+      onError(event: Event): void;
+      send(data: string): void;
+    };
   }
 
-  interface IHttpDataSource {
-    token: string;
-    get(url: string): Promise<any>;
-    post(url: string, data: any): Promise<any>;
-    put(url: string, data: any): Promise<any>;
-    remove(url: string, data: any): Promise<any>;
+  interface DrawCircleOptions {
+    fillColor?: string,
+    edgingWidth?: number,
+    edgingColor?: string,
   }
 
-  interface IWsDataSource {
-    onOpen(event: Event): void;
-    onClose(event: Event): void;
-    onMessage(event: Event): void;
-    onError(event: Event): void;
-    send(data: string): void;
+  interface DrawSectorOptions {
+    fillColor?: string,
+    edgingWidth?: number,
+    edgingColor?: string,
   }
 
-  interface IMenuItem {
+  interface DrawArcOptions {
+    fillColor?: string,
+    edgingWidth?: number,
+    edgingColor?: string,
+  }
+
+  interface DrawLineToAngleOptions {
+    lineColor?: string,
+    lineWidth?: number,
+  }
+
+  interface DrawRectangleOptions {
+    fillColor?: string,
+    edgingWidth?: number,
+    edgingColor?: string,
+  }
+
+  interface DrawTriangleOptions {
+    fillColor?: string,
+    edgingWidth?: number,
+    edgingColor?: string,
+  }
+
+  interface DrawStarOptions {
+    fillColor?: string,
+    edgingWidth?: number,
+    edgingColor?: string,
+  }
+
+  export interface LineSegment {
+    start: Point;
+    end: Point;
+  }
+
+  interface Point {
+    x: number;
+    y: number;
+  }
+
+  interface MenuItem {
     id?: string;
     type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
     name?: string;
@@ -167,35 +204,25 @@ declare module 'gpt-ts' {
     placeholder?: string;
     checked?: boolean;
     autocomplete?: string;
-    options?: IMenuItemOption[];
-    action?: IMenuItemAction;
+    options?: MenuItemOption[];
+    action?: MenuItemAction;
   }
 
-  interface IMenuItemOption {
+  interface MenuItemOption {
     value: string;
     text: string;
     label?: string;
     selected?: boolean;
   }
 
-  interface IMenuItemAction {
+  interface MenuItemAction {
     type: string;
     handler: EventListener;
   }
 
-  interface IEventHandler {
+  interface EventHandler {
     target: HTMLElement;
     type: string;
     listener: EventListener;
-  }
-
-  interface ILineSegment {
-    start: IPoint;
-    end: IPoint;
-  }
-
-  interface IPoint {
-    x: number;
-    y: number;
   }
 }

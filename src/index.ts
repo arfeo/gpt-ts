@@ -1,6 +1,15 @@
 import {
   Draw,
+  DrawCircleOptions,
+  DrawSectorOptions,
+  DrawArcOptions,
+  DrawLineToAngleOptions,
+  DrawRectangleOptions,
+  DrawTriangleOptions,
+  DrawStarOptions,
   Maths,
+  LineSegment,
+  Point,
   Storage,
   Utils,
 } from './classes';
@@ -8,9 +17,9 @@ import {
 import {
   GameComponent,
   MenuComponent,
-  IMenuItem,
-  IMenuItemOption,
-  IMenuItemAction,
+  MenuItem,
+  MenuItemOption,
+  MenuItemAction,
   ModalComponent,
 } from './components';
 
@@ -27,21 +36,28 @@ import {
 } from './services';
 
 import {
-  IEventHandler,
-  ILineSegment,
-  IPoint,
+  EventHandler,
 } from './types';
 
 export {
   Draw,
+  DrawCircleOptions,
+  DrawSectorOptions,
+  DrawArcOptions,
+  DrawLineToAngleOptions,
+  DrawRectangleOptions,
+  DrawTriangleOptions,
+  DrawStarOptions,
   Maths,
+  LineSegment,
+  Point,
   Storage,
   Utils,
   GameComponent,
   MenuComponent,
-  IMenuItem,
-  IMenuItemOption,
-  IMenuItemAction,
+  MenuItem,
+  MenuItemOption,
+  MenuItemAction,
   ModalComponent,
   HttpDataSource,
   IHttpDataSource,
@@ -49,7 +65,5 @@ export {
   IWsDataSource,
   HttpService,
   WsService,
-  IEventHandler,
-  ILineSegment,
-  IPoint,
+  EventHandler,
 };

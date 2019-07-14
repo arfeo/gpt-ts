@@ -1,13 +1,21 @@
-import { ILineSegment, IPoint } from '../types';
+interface LineSegment {
+  start: Point;
+  end: Point;
+}
 
-export class Maths {
+interface Point {
+  x: number;
+  y: number;
+}
+
+class Maths {
   /**
    * Returns true if one line segment intersects with another
    *
    * @param segment1
    * @param segment2
    */
-  static lineSegmentsIntersect(segment1: ILineSegment, segment2: ILineSegment): boolean {
+  static lineSegmentsIntersect(segment1: LineSegment, segment2: LineSegment): boolean {
     const det: number = (segment1.end.x - segment1.start.x) * (segment2.end.y - segment2.start.y) -
       (segment2.end.x - segment2.start.x) * (segment1.end.y - segment1.start.y);
 
@@ -30,7 +38,7 @@ export class Maths {
    * @param point
    * @param tolerance
    */
-  static pointOnLineSegment(segment: ILineSegment, point: IPoint, tolerance: number): boolean {
+  static pointOnLineSegment(segment: LineSegment, point: Point, tolerance: number): boolean {
     const dxL: number = segment.end.x - segment.start.x;
     const dyL: number = segment.end.y - segment.start.y;
     const dxP: number = point.x - segment.start.x;
@@ -50,20 +58,20 @@ export class Maths {
    * @param segment
    * @param rectCoords
    */
-  static lineSegmentIntersectsWithRect(segment: ILineSegment, rectCoords: number[]): boolean {
-    const segment1: ILineSegment = {
+  static lineSegmentIntersectsWithRect(segment: LineSegment, rectCoords: number[]): boolean {
+    const segment1: LineSegment = {
       start: { x: rectCoords[0], y: rectCoords[1] },
       end: { x: rectCoords[2], y: rectCoords[1] },
     };
-    const segment2: ILineSegment = {
+    const segment2: LineSegment = {
       start: { x: rectCoords[0], y: rectCoords[1] },
       end: { x: rectCoords[0], y: rectCoords[3] },
     };
-    const segment3: ILineSegment = {
+    const segment3: LineSegment = {
       start: { x: rectCoords[0], y: rectCoords[3] },
       end: { x: rectCoords[2], y: rectCoords[3] },
     };
-    const segment4: ILineSegment = {
+    const segment4: LineSegment = {
       start: { x: rectCoords[2], y: rectCoords[1] },
       end: { x: rectCoords[2], y: rectCoords[3] },
     };
@@ -75,4 +83,10 @@ export class Maths {
       this.lineSegmentsIntersect(segment, segment4)
     );
   }
+}
+
+export {
+  Maths,
+  LineSegment,
+  Point,
 }

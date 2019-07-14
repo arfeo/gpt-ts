@@ -1,5 +1,12 @@
-import { HttpDataSource, IHttpDataSource } from './HttpDataSource';
-import { WsDataSource, IWsDataSource } from './WsDataSource';
+import {
+  HttpDataSource,
+  IHttpDataSource,
+} from './HttpDataSource';
+
+import {
+  WsDataSource,
+  IWsDataSource,
+} from './WsDataSource';
 
 export {
   HttpDataSource,

@@ -1,7 +1,7 @@
 import { GameComponent } from './Game';
 import { MenuComponent } from './Menu';
 
-import { IEventHandler } from '../types';
+import { EventHandler } from '../types';
 
 export abstract class ModalComponent<T = {}> {
   page: GameComponent<T> | MenuComponent<T>;
@@ -11,7 +11,7 @@ export abstract class ModalComponent<T = {}> {
   modalClose: HTMLElement;
   modal: HTMLElement;
   modalContent: string;
-  eventHandlers: IEventHandler[];
+  eventHandlers: EventHandler[];
   init?(...args: any[]): void;
   abstract render(): void;
   unmount?(): void;

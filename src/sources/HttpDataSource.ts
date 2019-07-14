@@ -48,4 +48,7 @@ class HttpDataSource implements IHttpDataSource {
   }
 }
 
-export { HttpDataSource, IHttpDataSource };
+export {
+  HttpDataSource,
+  IHttpDataSource,
+};

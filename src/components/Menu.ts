@@ -1,6 +1,6 @@
 import { GameComponent } from './Game';
 
-interface IMenuItem {
+interface MenuItem {
   id?: string;
   type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
   name?: string;
@@ -10,25 +10,25 @@ interface IMenuItem {
   placeholder?: string;
   checked?: boolean;
   autocomplete?: string;
-  options?: IMenuItemOption[];
-  action?: IMenuItemAction;
+  options?: MenuItemOption[];
+  action?: MenuItemAction;
 }
 
-interface IMenuItemOption {
+interface MenuItemOption {
   value: string;
   text: string;
   label?: string;
   selected?: boolean;
 }
 
-interface IMenuItemAction {
+interface MenuItemAction {
   type: string;
   handler: EventListener;
 }
 
 abstract class MenuComponent<T = {}> extends GameComponent<T> {
   root: HTMLElement;
-  items: IMenuItem[];
+  items: MenuItem[];
 
   async beforeMount(...args: any[]): Promise<void> {
     this.eventHandlers = [];
@@ -116,7 +116,7 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
             if (opt.label) {
               option.label = opt.label;
             }
-            
+
             option.selected = opt.selected || false;
 
             menuElement.appendChild(option);
@@ -161,4 +161,9 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
   }
 }
 
-export { MenuComponent, IMenuItem, IMenuItemOption, IMenuItemAction };
+export {
+  MenuComponent,
+  MenuItem,
+  MenuItemOption,
+  MenuItemAction,
+};

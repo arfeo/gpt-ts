@@ -1,4 +1,22 @@
-export class Draw {
+interface DrawCommonOptions {
+  fillColor?: string,
+  edgingWidth?: number,
+  edgingColor?: string,
+}
+
+type DrawCircleOptions = DrawCommonOptions;
+type DrawSectorOptions = DrawCommonOptions;
+type DrawArcOptions = DrawCommonOptions;
+type DrawRectangleOptions = DrawCommonOptions;
+type DrawTriangleOptions = DrawCommonOptions;
+type DrawStarOptions = DrawCommonOptions;
+
+interface DrawLineToAngleOptions {
+  lineColor?: string,
+  lineWidth?: number,
+}
+
+class Draw {
   /**
    * Draws a circle of the given size and style at the given coordinates
    *
@@ -6,34 +24,26 @@ export class Draw {
    * @param dotX
    * @param dotY
    * @param radius
-   * @param fillStyle
-   * @param edgingWidth
-   * @param edgingColor
+   * @param options
    */
   static circle(
     ctx: CanvasRenderingContext2D,
     dotX: number,
     dotY: number,
     radius: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
+    options: DrawCircleOptions = {},
   ): void {
+    const { fillColor, edgingWidth, edgingColor } = options;
+
     ctx.beginPath();
     ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
 
-    if (fillStyle) {
-      ctx.fillStyle = fillStyle;
+    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
+    ctx.fill();
 
-      ctx.fill();
-    }
-
-    if (edgingWidth) {
-      ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-
-      ctx.stroke();
-    }
+    ctx.lineWidth = edgingWidth || 1;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.stroke();
   }
 
   /**
@@ -45,9 +55,7 @@ export class Draw {
    * @param radius
    * @param startAngle
    * @param endAngle
-   * @param fillStyle
-   * @param edgingWidth
-   * @param edgingColor
+   * @param options
    */
   static sector(
     ctx: CanvasRenderingContext2D,
@@ -56,28 +64,22 @@ export class Draw {
     radius: number,
     startAngle: number,
     endAngle: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
+    options: DrawSectorOptions = {},
   ): void {
+    const { fillColor, edgingWidth, edgingColor } = options;
+
     ctx.beginPath();
     ctx.moveTo(dotX, dotY);
     ctx.arc(dotX, dotY, radius, startAngle, endAngle);
     ctx.lineTo(dotX, dotY);
     ctx.closePath();
 
-    if (fillStyle) {
-      ctx.fillStyle = fillStyle;
+    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
+    ctx.fill();
 
-      ctx.fill();
-    }
-
-    if (edgingWidth) {
-      ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-
-      ctx.stroke();
-    }
+    ctx.lineWidth = edgingWidth || 1;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.stroke();
   }
 
   /**
@@ -89,9 +91,7 @@ export class Draw {
    * @param radius
    * @param startAngle
    * @param endAngle
-   * @param fillStyle
-   * @param edgingWidth
-   * @param edgingColor
+   * @param options
    */
   static arc(
     ctx: CanvasRenderingContext2D,
@@ -100,25 +100,19 @@ export class Draw {
     radius: number,
     startAngle: number,
     endAngle: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
+    options: DrawArcOptions = {},
   ): void {
+    const { fillColor, edgingWidth, edgingColor } = options;
+
     ctx.beginPath();
     ctx.arc(cx, cy, radius, startAngle, endAngle);
 
-    if (fillStyle) {
-      ctx.fillStyle = fillStyle;
+    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
+    ctx.fill();
 
-      ctx.fill();
-    }
-
-    if (edgingWidth) {
-      ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-
-      ctx.stroke();
-    }
+    ctx.lineWidth = edgingWidth || 1;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.stroke();
   }
 
   /**
@@ -130,8 +124,7 @@ export class Draw {
    * @param y1
    * @param length
    * @param angle
-   * @param strokeStyle
-   * @param lineWidth
+   * @param options
    */
   static lineToAngle(
     ctx: CanvasRenderingContext2D,
@@ -139,15 +132,16 @@ export class Draw {
     y1: number,
     length: number,
     angle: number,
-    strokeStyle: string,
-    lineWidth: number,
+    options: DrawLineToAngleOptions = {},
   ): number[][] {
+    const { lineColor, lineWidth } = options;
+
     const a = angle * Math.PI / 180;
     const x2 = x1 + length * Math.cos(a);
     const y2 = y1 + length * Math.sin(a);
 
-    ctx.strokeStyle = strokeStyle;
-    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = lineColor || 'rgb(0, 0, 0)';
+    ctx.lineWidth = lineWidth || 1;
 
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -168,9 +162,7 @@ export class Draw {
    * @param top
    * @param width
    * @param height
-   * @param fillStyle
-   * @param edgingWidth
-   * @param edgingColor
+   * @param options
    */
   static rectangle(
     ctx: CanvasRenderingContext2D,
@@ -178,22 +170,16 @@ export class Draw {
     top: number,
     width: number,
     height: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
+    options: DrawRectangleOptions = {},
   ): void {
-    if (fillStyle) {
-      ctx.fillStyle = fillStyle;
+    const { fillColor, edgingWidth, edgingColor } = options;
 
-      ctx.fillRect(left, top, width, height);
-    }
+    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
+    ctx.fillRect(left, top, width, height);
 
-    if (edgingWidth) {
-      ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-
-      ctx.strokeRect(left, top, width, height);
-    }
+    ctx.lineWidth = edgingWidth || 1;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.strokeRect(left, top, width, height);
   }
 
   /**
@@ -203,37 +189,29 @@ export class Draw {
    * @param c1
    * @param c2
    * @param c3
-   * @param fillStyle
-   * @param edgingWidth
-   * @param edgingColor
+   * @param options
    */
   static triangle(
     ctx: CanvasRenderingContext2D,
     c1: number[],
     c2: number[],
     c3: number[],
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
+    options: DrawTriangleOptions = {},
   ): void {
+    const { fillColor, edgingWidth, edgingColor } = options;
+
     ctx.beginPath();
     ctx.moveTo(c1[0], c1[1]);
     ctx.lineTo(c2[0], c2[1]);
     ctx.lineTo(c3[0], c3[1]);
     ctx.closePath();
 
-    if (fillStyle) {
-      ctx.fillStyle = fillStyle;
+    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
+    ctx.fill();
 
-      ctx.fill();
-    }
-
-    if (edgingWidth) {
-      ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-
-      ctx.stroke();
-    }
+    ctx.lineWidth = edgingWidth || 1;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.stroke();
   }
 
   /**
@@ -245,9 +223,7 @@ export class Draw {
    * @param spikes
    * @param outerRadius
    * @param innerRadius
-   * @param fillStyle
-   * @param edgingWidth
-   * @param edgingColor
+   * @param options
    */
   static star(
     ctx: CanvasRenderingContext2D,
@@ -256,11 +232,12 @@ export class Draw {
     spikes: number,
     outerRadius: number,
     innerRadius: number,
-    fillStyle?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
+    options: DrawStarOptions = {},
   ): void {
+    const { fillColor, edgingWidth, edgingColor } = options;
+
     const step = Math.PI / spikes;
+
     let rotation: number = Math.PI / 2 * 3;
     let x: number = cx;
     let y: number = cy;
@@ -283,17 +260,23 @@ export class Draw {
     ctx.lineTo(cx, cy - outerRadius);
     ctx.closePath();
 
-    if (edgingWidth) {
-      ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.lineWidth = edgingWidth || 1;
+    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
+    ctx.stroke();
 
-      ctx.stroke();
-    }
-
-    if (fillStyle) {
-      ctx.fillStyle = fillStyle;
-
-      ctx.fill();
-    }
+    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
+    ctx.fill();
   }
+}
+
+export {
+  Draw,
+  DrawCommonOptions,
+  DrawCircleOptions,
+  DrawSectorOptions,
+  DrawArcOptions,
+  DrawRectangleOptions,
+  DrawTriangleOptions,
+  DrawStarOptions,
+  DrawLineToAngleOptions,
 }
