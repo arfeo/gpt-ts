@@ -3,8 +3,14 @@ export as namespace Gpt;
 
 declare namespace Gpt {
   class Draw {
+    static createCanvas(
+      canvasId: string,
+      parentElement: Node,
+      options?: Partial<Omit<HTMLCanvasElement, 'id'>>,
+    ): void;
+
     static circle(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       dotX: number,
       dotY: number,
       radius: number,
@@ -12,7 +18,7 @@ declare namespace Gpt {
     ): void;
 
     static sector(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       dotX: number,
       dotY: number,
       radius: number,
@@ -22,7 +28,7 @@ declare namespace Gpt {
     ): void;
 
     static arc(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       cx: number,
       cy: number,
       radius: number,
@@ -32,7 +38,7 @@ declare namespace Gpt {
     ): void;
 
     static lineToAngle(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       x1: number,
       y1: number,
       length: number,
@@ -41,7 +47,7 @@ declare namespace Gpt {
     ): number[][];
 
     static rectangle(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       left: number,
       top: number,
       width: number,
@@ -50,7 +56,7 @@ declare namespace Gpt {
     ): void;
 
     static triangle(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       c1: number[],
       c2: number[],
       c3: number[],
@@ -58,7 +64,7 @@ declare namespace Gpt {
     ): void;
 
     static star(
-      ctx: CanvasRenderingContext2D,
+      canvasId: string,
       cx: number,
       cy: number,
       spikes: number,
@@ -143,46 +149,21 @@ declare namespace Gpt {
     };
   }
 
-  interface DrawCircleOptions {
+  interface DrawCommonOptions {
     fillColor?: string,
     edgingWidth?: number,
     edgingColor?: string,
-  }
-
-  interface DrawSectorOptions {
-    fillColor?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  }
-
-  interface DrawArcOptions {
-    fillColor?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  }
-
-  interface DrawLineToAngleOptions {
     lineColor?: string,
     lineWidth?: number,
   }
 
-  interface DrawRectangleOptions {
-    fillColor?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  }
-
-  interface DrawTriangleOptions {
-    fillColor?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  }
-
-  interface DrawStarOptions {
-    fillColor?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-  }
+  type DrawCircleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  type DrawSectorOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  type DrawArcOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  type DrawLineToAngleOptions = Pick<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  type DrawRectangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  type DrawTriangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  type DrawStarOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
 
   export interface LineSegment {
     start: Point;
