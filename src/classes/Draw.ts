@@ -40,6 +40,19 @@ class Draw {
   }
 
   /**
+   * Returns an object (includes information about colors, line widths, fonts,
+   * and other graphic parameters that can be drawn on a canvas)
+   * that provides methods and properties for drawing and manipulating
+   * images and graphics on a canvas element in a document for the given canvas element id
+   *
+   * @param canvasId
+   * @param contextType
+   */
+  static getContextByCanvasId(canvasId: string, contextType: string = '2d'): CanvasRenderingContext2D | WebGLRenderingContext | null {
+    return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType);
+  }
+
+  /**
    * Draws a circle of the given size and style at the given coordinates
    *
    * @param canvasId

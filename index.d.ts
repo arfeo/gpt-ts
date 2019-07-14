@@ -9,6 +9,8 @@ declare namespace Gpt {
       options?: Partial<Omit<HTMLCanvasElement, 'id'>>,
     ): void;
 
+    static getContextByCanvasId(canvasId: string, contextType: string = '2d'): CanvasRenderingContext2D | WebGLRenderingContext | null;
+
     static circle(
       canvasId: string,
       dotX: number,
