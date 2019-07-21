@@ -28,4 +28,8 @@ export class Utils {
 
     return num;
   }
+
+  static isElement(obj: any): boolean {
+    return obj instanceof Element || obj instanceof HTMLDocument;
+  }
 }

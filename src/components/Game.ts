@@ -1,3 +1,5 @@
+import { Utils } from '../classes';
+
 import { EventHandler } from '../types';
 
 export abstract class GameComponent<T = {}> {
@@ -8,6 +10,8 @@ export abstract class GameComponent<T = {}> {
   unmount?(): void;
 
   protected constructor(...args: any[]) {
+    this.eventHandlers = [];
+
     this.beforeMount(...args).then(() => {
       typeof this.render === 'function' && this.render();
 
@@ -33,13 +37,21 @@ export abstract class GameComponent<T = {}> {
 
   setUpEventHandlers() {
     for (const prop of this.eventHandlers) {
-      prop.target.addEventListener(prop.type, prop.listener);
+      const target: HTMLElement = Utils.isElement(prop.target)
+        ? prop.target as HTMLElement
+        : document.getElementById(prop.target as string);
+
+      target.addEventListener(prop.type, prop.listener);
     }
   }
 
   removeEventHandlers() {
     for (const prop of this.eventHandlers) {
-      prop.target.removeEventListener(prop.type, prop.listener);
+      const target: HTMLElement = Utils.isElement(prop.target)
+        ? prop.target as HTMLElement
+        : document.getElementById(prop.target as string);
+
+      target.removeEventListener(prop.type, prop.listener);
     }
   }
 }

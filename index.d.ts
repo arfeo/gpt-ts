@@ -204,7 +204,7 @@ declare namespace Gpt {
   }
 
   interface EventHandler {
-    target: HTMLElement;
+    target: HTMLElement | string;
     type: string;
     listener: EventListener;
   }

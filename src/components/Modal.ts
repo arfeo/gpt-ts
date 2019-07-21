@@ -1,6 +1,8 @@
 import { GameComponent } from './Game';
 import { MenuComponent } from './Menu';
 
+import { Utils } from '../classes';
+
 import { EventHandler } from '../types';
 
 export abstract class ModalComponent<T = {}> {
@@ -23,6 +25,8 @@ export abstract class ModalComponent<T = {}> {
     ...args: any[]
   ) {
     this.page = page;
+
+    this.eventHandlers = [];
 
     this.modalContainer = document.createElement('div');
     this.modalContainer.className = 'modal-container';
@@ -76,20 +80,28 @@ export abstract class ModalComponent<T = {}> {
 
     this.modalContainer.remove();
 
-    if (restoreHandlers) {
+    if (restoreHandlers && Array.isArray(this.page.eventHandlers) && this.page.eventHandlers.length > 0) {
       this.page.setUpEventHandlers.call(this.page);
     }
   }
 
   setUpEventHandlers() {
     for (const prop of this.eventHandlers) {
-      prop.target.addEventListener(prop.type, prop.listener);
+      const target: HTMLElement = Utils.isElement(prop.target)
+        ? prop.target as HTMLElement
+        : document.getElementById(prop.target as string);
+
+      target.addEventListener(prop.type, prop.listener);
     }
   }
 
   removeEventHandlers() {
     for (const prop of this.eventHandlers) {
-      prop.target.removeEventListener(prop.type, prop.listener);
+      const target: HTMLElement = Utils.isElement(prop.target)
+        ? prop.target as HTMLElement
+        : document.getElementById(prop.target as string);
+
+      target.removeEventListener(prop.type, prop.listener);
     }
   }
 }
