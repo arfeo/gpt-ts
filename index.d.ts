@@ -11,7 +11,7 @@ declare namespace Gpt {
 
     static getContextByCanvasId(
       canvasId: string,
-      contextType: string = '2d',
+      contextType?: string,
     ): CanvasRenderingContext2D | WebGLRenderingContext | null;
 
     static circle(
@@ -105,7 +105,7 @@ declare namespace Gpt {
 
   class Utils {
     static getCellSize(vmin: number): number;
-    static getRandomNum(min: number = 1, max: number = 1, discard: number[] = []): number;
+    static getRandomNum(min?: number, max?: number, discard?: number[]): number;
     static isElement(value: any): boolean;
   }
 
@@ -149,7 +149,7 @@ declare namespace Gpt {
     init(...args: any[]): void;
     render(): void;
     beforeUnmount(): void;
-    destroy(shouldRestoreParentHandlers?: boolean = true): void;
+    destroy(shouldRestoreParentHandlers?: boolean): void;
   }
 
   class HttpService {

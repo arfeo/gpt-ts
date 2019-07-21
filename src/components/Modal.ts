@@ -101,7 +101,7 @@ export abstract class ModalComponent<T = {}> {
     }
   }
 
-  destroy(shouldRestoreParentHandlers = true): void {
+  destroy(shouldRestoreParentHandlers: boolean = true): void {
     const { eventHandlers: parentEventHandlers } = this.parent;
 
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();

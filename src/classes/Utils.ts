@@ -21,7 +21,7 @@ export class Utils {
    * @param max
    * @param discard
    */
-  static getRandomNum(min = 1, max = 1, discard: number[] = []): number {
+  static getRandomNum(min: number = 1, max: number = 1000, discard: number[] = []): number {
     const num: number = Math.floor(min + Math.random() * (max + 1 - min));
 
     if (discard.indexOf(num) > -1) {
