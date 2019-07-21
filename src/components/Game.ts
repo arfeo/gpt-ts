@@ -7,7 +7,7 @@ export abstract class GameComponent<T = {}> {
   eventHandlers: EventHandler[];
   init?(...args: any[]): void;
   abstract render(): void;
-  unmount?(): void;
+  beforeUnmount?(): void;
 
   protected constructor(...args: any[]) {
     this.eventHandlers = [];
@@ -27,39 +27,37 @@ export abstract class GameComponent<T = {}> {
     return Promise.resolve();
   }
 
-  destroy() {
-    typeof this.unmount === 'function' && this.unmount();
+  setUpEventHandlers(): void {
+    for (const prop of this.eventHandlers) {
+      const { target, type, listener } = prop;
+      const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
+
+      if (!element) {
+        break;
+      }
+
+      element.addEventListener(type, listener);
+    }
+  }
+
+  removeEventHandlers(): void {
+    for (const prop of this.eventHandlers) {
+      const { target, type, listener } = prop;
+      const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
+
+      if (!element) {
+        break;
+      }
+
+      element.removeEventListener(type, listener);
+    }
+  }
+
+  destroy(): void {
+    typeof this.beforeUnmount === 'function' && this.beforeUnmount();
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
       this.removeEventHandlers();
-    }
-  }
-
-  setUpEventHandlers() {
-    for (const prop of this.eventHandlers) {
-      const target: HTMLElement = Utils.isElement(prop.target)
-        ? prop.target as HTMLElement
-        : document.getElementById(prop.target as string);
-
-      if (!target) {
-        break;
-      }
-
-      target.addEventListener(prop.type, prop.listener);
-    }
-  }
-
-  removeEventHandlers() {
-    for (const prop of this.eventHandlers) {
-      const target: HTMLElement = Utils.isElement(prop.target)
-        ? prop.target as HTMLElement
-        : document.getElementById(prop.target as string);
-
-      if (!target) {
-        break;
-      }
-
-      target.removeEventListener(prop.type, prop.listener);
     }
   }
 }

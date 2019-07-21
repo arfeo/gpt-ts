@@ -39,7 +39,7 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
     return Promise.resolve();
   }
 
-  render() {
+  render(): void {
     const menuContainer: HTMLElement = document.createElement('div');
 
     menuContainer.className = 'menuContainer';

@@ -9,7 +9,10 @@ declare namespace Gpt {
       options?: Partial<Omit<HTMLCanvasElement, 'id'>>,
     ): void;
 
-    static getContextByCanvasId(canvasId: string, contextType: string = '2d'): CanvasRenderingContext2D | WebGLRenderingContext | null;
+    static getContextByCanvasId(
+      canvasId: string,
+      contextType: string = '2d',
+    ): CanvasRenderingContext2D | WebGLRenderingContext | null;
 
     static circle(
       canvasId: string,
@@ -77,9 +80,21 @@ declare namespace Gpt {
   }
 
   class Maths {
-    static lineSegmentsIntersect(segment1: LineSegment, segment2: LineSegment): boolean;
-    static pointOnLineSegment(segment: LineSegment, point: Point, tolerance: number): boolean;
-    static lineSegmentIntersectsWithRect(segment: LineSegment, rectCoords: number[]): boolean;
+    static lineSegmentsIntersect(
+      segment1: LineSegment,
+      segment2: LineSegment,
+    ): boolean;
+
+    static pointOnLineSegment(
+      segment: LineSegment,
+      point: Point,
+      tolerance: number,
+    ): boolean;
+
+    static lineSegmentIntersectsWithRect(
+      segment: LineSegment,
+      rectCoords: number[],
+    ): boolean;
   }
 
   class Storage {
@@ -89,9 +104,9 @@ declare namespace Gpt {
   }
 
   class Utils {
-    static setCellSize(vmin: number): number;
-    static getRandomNum(min = 1, max = 1, discard: number[] = []): number;
-    static isElement(obj: any): boolean;
+    static getCellSize(vmin: number): number;
+    static getRandomNum(min: number = 1, max: number = 1, discard: number[] = []): number;
+    static isElement(value: any): boolean;
   }
 
   class GameComponent<T = {}> {
@@ -102,7 +117,7 @@ declare namespace Gpt {
     render(): void;
     setUpEventHandlers(): void;
     removeEventHandlers(): void;
-    unmount(): void;
+    beforeUnmount(): void;
     destroy(): void;
   }
 
@@ -112,15 +127,18 @@ declare namespace Gpt {
     root: HTMLElement;
     items: MenuItem[];
     init(): void;
-    setUpEventHandlers(): void;
-    removeEventHandlers(): void;
-    unmount(): void;
+    beforeUnmount(): void;
     destroy(): void;
   }
 
   class ModalComponent<T = {}> {
-    constructor(page: GameComponent<T> | MenuComponent<T>, text?: string, size?: 'large' | 'medium' | 'small', ...args: any[]): void;
-    page: GameComponent<T> | MenuComponent<T>;
+    constructor(
+      page: GameComponent<T> | MenuComponent<T>,
+      text?: string,
+      size?: 'large' | 'medium' | 'small',
+      ...args: any[]
+    ): void;
+    parent: GameComponent<T> | MenuComponent<T>;
     modalContainer: HTMLElement;
     mask: HTMLElement;
     modalWindow: HTMLElement;
@@ -129,11 +147,9 @@ declare namespace Gpt {
     modalContent: string;
     eventHandlers: EventHandler[];
     init(...args: any[]): void;
-    setUpEventHandlers(): void;
-    removeEventHandlers(): void;
     render(): void;
-    unmount(): void;
-    close(restoreHandlers?: boolean): void;
+    beforeUnmount(): void;
+    destroy(shouldRestoreParentHandlers?: boolean = true): void;
   }
 
   class HttpService {

@@ -48,7 +48,10 @@ class Draw {
    * @param canvasId
    * @param contextType
    */
-  static getContextByCanvasId(canvasId: string, contextType: string = '2d'): CanvasRenderingContext2D | WebGLRenderingContext | null {
+  static getContextByCanvasId(
+    canvasId: string,
+    contextType: string = '2d',
+  ): CanvasRenderingContext2D | WebGLRenderingContext | null {
     return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType);
   }
 
@@ -75,12 +78,16 @@ class Draw {
     ctx.beginPath();
     ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.stroke();
+    }
   }
 
   /**
@@ -113,12 +120,16 @@ class Draw {
     ctx.lineTo(dotX, dotY);
     ctx.closePath();
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.stroke();
+    }
   }
 
   /**
@@ -148,12 +159,16 @@ class Draw {
     ctx.beginPath();
     ctx.arc(cx, cy, radius, startAngle, endAngle);
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.stroke();
+    }
   }
 
   /**
@@ -183,13 +198,15 @@ class Draw {
     const x2 = x1 + length * Math.cos(a);
     const y2 = y1 + length * Math.sin(a);
 
-    ctx.strokeStyle = lineColor || 'rgb(0, 0, 0)';
-    ctx.lineWidth = lineWidth || 1;
+    if (lineWidth) {
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = lineColor || 'rgb(0, 0, 0)';
 
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
 
     return [
       [x1, y1],
@@ -219,12 +236,16 @@ class Draw {
 
     const ctx: CanvasRenderingContext2D = (document.getElementById(canvasId) as HTMLCanvasElement).getContext('2d');
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fillRect(left, top, width, height);
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(left, top, width, height);
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.strokeRect(left, top, width, height);
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.stroke();
+    }
   }
 
   /**
@@ -253,12 +274,16 @@ class Draw {
     ctx.lineTo(c3[0], c3[1]);
     ctx.closePath();
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.stroke();
+    }
   }
 
   /**
@@ -309,12 +334,16 @@ class Draw {
     ctx.lineTo(cx, cy - outerRadius);
     ctx.closePath();
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.stroke();
+    }
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
   }
 }
 

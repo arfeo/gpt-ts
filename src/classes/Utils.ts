@@ -1,9 +1,10 @@
 export class Utils {
   /**
    * Returns the cell size (atomic canvas measure)
-   * depending on the screen size and the given vmin value
+   * depending on the screen size and the given vmin value;
+   * the returned value is rounded to the nearest ten
    */
-  static setCellSize(vmin: number): number {
+  static getCellSize(vmin: number): number {
     const vpWidth: number = window.innerWidth;
     const vpHeight: number = window.innerHeight;
     const vminCalculated: number = vpWidth >= vpHeight ? (vpHeight / 100) : (vpWidth / 100);
@@ -13,7 +14,8 @@ export class Utils {
 
   /**
    * Returns a random number in a given interval;
-   * as an option it discards one or more numbers given in the `discard` array
+   * as an option it discards one or more numbers given
+   * in the `discard` array
    *
    * @param min
    * @param max
@@ -30,12 +32,12 @@ export class Utils {
   }
 
   /**
-   * Returns true if the given `obj` is a DOM element or a `document` object;
+   * Returns true if the given `value` is a DOM element;
    * otherwise returns false
    *
-   * @param obj
+   * @param value
    */
-  static isElement(obj: any): boolean {
-    return obj instanceof Element || obj instanceof HTMLDocument;
+  static isElement(value: any): boolean {
+    return value instanceof Element || value instanceof HTMLDocument;
   }
 }
