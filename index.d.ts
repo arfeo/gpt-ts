@@ -99,6 +99,8 @@ declare namespace Gpt {
     eventHandlers: EventHandler[];
     init(...args: any[]): void;
     render(): void;
+    setUpEventHandlers(): void;
+    removeEventHandlers(): void;
     unmount(): void;
     destroy(): void;
   }
@@ -109,6 +111,8 @@ declare namespace Gpt {
     root: HTMLElement;
     items: MenuItem[];
     init(): void;
+    setUpEventHandlers(): void;
+    removeEventHandlers(): void;
     unmount(): void;
     destroy(): void;
   }

@@ -91,6 +91,10 @@ export abstract class ModalComponent<T = {}> {
         ? prop.target as HTMLElement
         : document.getElementById(prop.target as string);
 
+      if (!target) {
+        break;
+      }
+
       target.addEventListener(prop.type, prop.listener);
     }
   }
@@ -100,6 +104,10 @@ export abstract class ModalComponent<T = {}> {
       const target: HTMLElement = Utils.isElement(prop.target)
         ? prop.target as HTMLElement
         : document.getElementById(prop.target as string);
+
+      if (!target) {
+        break;
+      }
 
       target.removeEventListener(prop.type, prop.listener);
     }
