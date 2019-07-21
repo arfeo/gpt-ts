@@ -29,6 +29,12 @@ export class Utils {
     return num;
   }
 
+  /**
+   * Returns true if the given `obj` is a DOM element or a `document` object;
+   * otherwise returns false
+   *
+   * @param obj
+   */
   static isElement(obj: any): boolean {
     return obj instanceof Element || obj instanceof HTMLDocument;
   }

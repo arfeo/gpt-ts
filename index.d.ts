@@ -91,6 +91,7 @@ declare namespace Gpt {
   class Utils {
     static setCellSize(vmin: number): number;
     static getRandomNum(min = 1, max = 1, discard: number[] = []): number;
+    static isElement(obj: any): boolean;
   }
 
   class GameComponent<T = {}> {
@@ -128,6 +129,8 @@ declare namespace Gpt {
     modalContent: string;
     eventHandlers: EventHandler[];
     init(...args: any[]): void;
+    setUpEventHandlers(): void;
+    removeEventHandlers(): void;
     render(): void;
     unmount(): void;
     close(restoreHandlers?: boolean): void;
