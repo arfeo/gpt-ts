@@ -5,7 +5,7 @@ import { EventHandler } from '../types';
 export abstract class GameComponent<T = {}> {
   services: T;
   eventHandlers: EventHandler[];
-  init?(...args: any[]): void;
+  init?(...args: any[]): Promise<any> | void;
   abstract render(): void;
   beforeUnmount?(): void;
 

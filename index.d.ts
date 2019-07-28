@@ -113,7 +113,7 @@ declare namespace Gpt {
     constructor(...args: any[]): void;
     services: T;
     eventHandlers: EventHandler[];
-    init(...args: any[]): void;
+    init(...args: any[]): Promise<any> | void;
     render(): void;
     setUpEventHandlers(): void;
     removeEventHandlers(): void;
@@ -126,7 +126,7 @@ declare namespace Gpt {
     services: T;
     root: HTMLElement;
     items: MenuItem[];
-    init(): void;
+    init(): Promise<any> | void;
     beforeUnmount(): void;
     destroy(): void;
   }
@@ -146,7 +146,7 @@ declare namespace Gpt {
     modal: HTMLElement;
     modalContent: string;
     eventHandlers: EventHandler[];
-    init(...args: any[]): void;
+    init(...args: any[]): Promise<any> | void;
     render(): void;
     beforeUnmount(): void;
     destroy(shouldRestoreParentHandlers?: boolean): void;
