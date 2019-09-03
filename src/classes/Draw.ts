@@ -52,7 +52,7 @@ class Draw {
     canvasId: string,
     contextType: string = '2d',
   ): CanvasRenderingContext2D | WebGLRenderingContext | null {
-    return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType);
+    return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType) as CanvasRenderingContext2D | WebGLRenderingContext;
   }
 
   /**
