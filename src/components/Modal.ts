@@ -18,7 +18,7 @@ export abstract class ModalComponent<T = {}> {
   public abstract render(): void;
   public beforeUnmount?(): void;
 
-  public constructor(
+  protected constructor(
     parent: GameComponent<T> | MenuComponent<T>,
     text?: string,
     size?: 'large' | 'medium' | 'small',

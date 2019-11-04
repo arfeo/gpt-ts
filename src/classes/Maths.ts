@@ -89,4 +89,4 @@ export {
   Maths,
   LineSegment,
   Point,
-}
+};

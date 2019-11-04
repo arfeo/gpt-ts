@@ -1,9 +1,9 @@
 interface DrawCommonOptions {
-  fillColor?: string,
-  edgingWidth?: number,
-  edgingColor?: string,
-  lineColor?: string,
-  lineWidth?: number,
+  fillColor?: string;
+  edgingWidth?: number;
+  edgingColor?: string;
+  lineColor?: string;
+  lineWidth?: number;
 }
 
 type DrawCircleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
@@ -357,4 +357,4 @@ export {
   DrawTriangleOptions,
   DrawStarOptions,
   DrawLineToAngleOptions,
-}
+};
