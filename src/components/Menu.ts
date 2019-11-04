@@ -27,10 +27,10 @@ interface MenuItemAction {
 }
 
 abstract class MenuComponent<T = {}> extends GameComponent<T> {
-  root: HTMLElement;
-  items: MenuItem[];
+  public root: HTMLElement;
+  public items: MenuItem[];
 
-  async beforeMount(...args: any[]): Promise<void> {
+  public async beforeMount(...args: any[]): Promise<void> {
     this.eventHandlers = [];
     this.items = [];
 
@@ -39,7 +39,7 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
     return Promise.resolve();
   }
 
-  render() {
+  public render(): void {
     const menuContainer: HTMLElement = document.createElement('div');
 
     menuContainer.className = 'menuContainer';

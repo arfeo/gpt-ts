@@ -1,28 +1,32 @@
 import { GameComponent } from './Game';
 import { MenuComponent } from './Menu';
 
+import { Utils } from '../classes';
+
 import { EventHandler } from '../types';
 
 export abstract class ModalComponent<T = {}> {
-  page: GameComponent<T> | MenuComponent<T>;
-  modalContainer: HTMLElement;
-  mask: HTMLElement;
-  modalWindow: HTMLElement;
-  modalClose: HTMLElement;
-  modal: HTMLElement;
-  modalContent: string;
-  eventHandlers: EventHandler[];
-  init?(...args: any[]): void;
-  abstract render(): void;
-  unmount?(): void;
+  public parent: GameComponent<T> | MenuComponent<T>;
+  public modalContainer: HTMLElement;
+  public mask: HTMLElement;
+  public modalWindow: HTMLElement;
+  public modalClose: HTMLElement;
+  public modal: HTMLElement;
+  public modalContent: string;
+  public eventHandlers: EventHandler[];
+  public init?(...args: any[]): Promise<any> | void;
+  public abstract render(): void;
+  public beforeUnmount?(): void;
 
-  protected constructor(
-    page: GameComponent<T> | MenuComponent<T>,
+  public constructor(
+    parent: GameComponent<T> | MenuComponent<T>,
     text?: string,
     size?: 'large' | 'medium' | 'small',
     ...args: any[]
   ) {
-    this.page = page;
+    this.parent = parent;
+
+    this.eventHandlers = [];
 
     this.modalContainer = document.createElement('div');
     this.modalContainer.className = 'modal-container';
@@ -48,11 +52,15 @@ export abstract class ModalComponent<T = {}> {
 
     this.modalContent = text || '';
 
-    this.page.removeEventHandlers.call(this.page);
+    const { eventHandlers: parentEventHandlers } = this.parent;
 
-    this.modalClose.addEventListener('click', this.close.bind(this));
+    if (Array.isArray(parentEventHandlers) && parentEventHandlers.length > 0) {
+      this.parent.removeEventHandlers.call(this.parent);
+    }
 
-    this.beforeMount(...args).then(() => {
+    this.modalClose.addEventListener('click', this.destroy.bind(this));
+
+    this.beforeMount(...args).then((): void => {
       typeof this.render === 'function' && this.render();
 
       if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
@@ -61,14 +69,42 @@ export abstract class ModalComponent<T = {}> {
     });
   }
 
-  async beforeMount(...args: any[]): Promise<void> {
+  public async beforeMount(...args: any[]): Promise<void> {
     typeof this.init === 'function' && await this.init(...args);
 
     return Promise.resolve();
   }
 
-  close(restoreHandlers = true) {
-    typeof this.unmount === 'function' && this.unmount();
+  public setUpEventHandlers(): void {
+    for (const prop of this.eventHandlers) {
+      const { target, type, listener } = prop;
+      const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
+
+      if (!element) {
+        break;
+      }
+
+      element.addEventListener(type, listener);
+    }
+  }
+
+  public removeEventHandlers(): void {
+    for (const prop of this.eventHandlers) {
+      const { target, type, listener } = prop;
+      const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
+
+      if (!element) {
+        break;
+      }
+
+      element.removeEventListener(type, listener);
+    }
+  }
+
+  public destroy(shouldRestoreParentHandlers: boolean = true): void {
+    const { eventHandlers: parentEventHandlers } = this.parent;
+
+    typeof this.beforeUnmount === 'function' && this.beforeUnmount();
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
       this.removeEventHandlers();
@@ -76,20 +112,8 @@ export abstract class ModalComponent<T = {}> {
 
     this.modalContainer.remove();
 
-    if (restoreHandlers) {
-      this.page.setUpEventHandlers.call(this.page);
-    }
-  }
-
-  setUpEventHandlers() {
-    for (const prop of this.eventHandlers) {
-      prop.target.addEventListener(prop.type, prop.listener);
-    }
-  }
-
-  removeEventHandlers() {
-    for (const prop of this.eventHandlers) {
-      prop.target.removeEventListener(prop.type, prop.listener);
+    if (shouldRestoreParentHandlers && Array.isArray(parentEventHandlers) && parentEventHandlers.length > 0) {
+      this.parent.setUpEventHandlers.call(this.parent);
     }
   }
 }

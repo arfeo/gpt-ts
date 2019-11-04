@@ -3,15 +3,18 @@ export as namespace Gpt;
 
 declare namespace Gpt {
   class Draw {
-    static createCanvas(
+    public static createCanvas(
       canvasId: string,
       parentElement: Node,
       options?: Partial<Omit<HTMLCanvasElement, 'id'>>,
     ): void;
 
-    static getContextByCanvasId(canvasId: string, contextType: string = '2d'): CanvasRenderingContext2D | WebGLRenderingContext | null;
+    public static getContextByCanvasId(
+      canvasId: string,
+      contextType?: string,
+    ): CanvasRenderingContext2D | WebGLRenderingContext | null;
 
-    static circle(
+    public static circle(
       canvasId: string,
       dotX: number,
       dotY: number,
@@ -19,7 +22,7 @@ declare namespace Gpt {
       options: DrawCircleOptions,
     ): void;
 
-    static sector(
+    public static sector(
       canvasId: string,
       dotX: number,
       dotY: number,
@@ -29,7 +32,7 @@ declare namespace Gpt {
       options: DrawSectorOptions,
     ): void;
 
-    static arc(
+    public static arc(
       canvasId: string,
       cx: number,
       cy: number,
@@ -39,7 +42,7 @@ declare namespace Gpt {
       options: DrawArcOptions,
     ): void;
 
-    static lineToAngle(
+    public static lineToAngle(
       canvasId: string,
       x1: number,
       y1: number,
@@ -48,7 +51,7 @@ declare namespace Gpt {
       options: DrawLineToAngleOptions,
     ): number[][];
 
-    static rectangle(
+    public static rectangle(
       canvasId: string,
       left: number,
       top: number,
@@ -57,7 +60,7 @@ declare namespace Gpt {
       options: DrawRectangleOptions,
     ): void;
 
-    static triangle(
+    public static triangle(
       canvasId: string,
       c1: number[],
       c2: number[],
@@ -65,7 +68,7 @@ declare namespace Gpt {
       options: DrawTriangleOptions,
     ): void;
 
-    static star(
+    public static star(
       canvasId: string,
       cx: number,
       cy: number,
@@ -77,61 +80,81 @@ declare namespace Gpt {
   }
 
   class Maths {
-    static lineSegmentsIntersect(segment1: LineSegment, segment2: LineSegment): boolean;
-    static pointOnLineSegment(segment: LineSegment, point: Point, tolerance: number): boolean;
-    static lineSegmentIntersectsWithRect(segment: LineSegment, rectCoords: number[]): boolean;
+    public static lineSegmentsIntersect(
+      segment1: LineSegment,
+      segment2: LineSegment,
+    ): boolean;
+
+    public static pointOnLineSegment(
+      segment: LineSegment,
+      point: Point,
+      tolerance: number,
+    ): boolean;
+
+    public static lineSegmentIntersectsWithRect(
+      segment: LineSegment,
+      rectCoords: number[],
+    ): boolean;
   }
 
   class Storage {
-    static getData(key: string): any;
-    static saveData(key: string, data: any): void;
-    static removeData(key: string): void;
+    public static getData(key: string): any;
+    public static saveData(key: string, data: any): void;
+    public static removeData(key: string): void;
   }
 
   class Utils {
-    static setCellSize(vmin: number): number;
-    static getRandomNum(min = 1, max = 1, discard: number[] = []): number;
+    public static getCellSize(vmin: number): number;
+    public static getRandomNum(min?: number, max?: number, discard?: number[]): number;
+    public static isElement(value: any): boolean;
   }
 
   class GameComponent<T = {}> {
-    constructor(...args: any[]): void;
-    services: T;
-    eventHandlers: EventHandler[];
-    init(...args: any[]): void;
-    render(): void;
-    unmount(): void;
-    destroy(): void;
+    public constructor(...args: any[]): void;
+    public services: T;
+    public eventHandlers: EventHandler[];
+    public init(...args: any[]): Promise<any> | void;
+    public render(): void;
+    public setUpEventHandlers(): void;
+    public removeEventHandlers(): void;
+    public beforeUnmount(): void;
+    public destroy(): void;
   }
 
   class MenuComponent<T = {}> {
-    constructor(...args: any[]): void;
-    services: T;
-    root: HTMLElement;
-    items: MenuItem[];
-    init(): void;
-    unmount(): void;
-    destroy(): void;
+    public constructor(...args: any[]): void;
+    public services: T;
+    public root: HTMLElement;
+    public items: MenuItem[];
+    public init(): Promise<any> | void;
+    public beforeUnmount(): void;
+    public destroy(): void;
   }
 
   class ModalComponent<T = {}> {
-    constructor(page: GameComponent<T> | MenuComponent<T>, text?: string, size?: 'large' | 'medium' | 'small', ...args: any[]): void;
-    page: GameComponent<T> | MenuComponent<T>;
-    modalContainer: HTMLElement;
-    mask: HTMLElement;
-    modalWindow: HTMLElement;
-    modalClose: HTMLElement;
-    modal: HTMLElement;
-    modalContent: string;
-    eventHandlers: EventHandler[];
-    init(...args: any[]): void;
-    render(): void;
-    unmount(): void;
-    close(restoreHandlers?: boolean): void;
+    public constructor(
+      page: GameComponent<T> | MenuComponent<T>,
+      text?: string,
+      size?: 'large' | 'medium' | 'small',
+      ...args: any[]
+    ): void;
+    public parent: GameComponent<T> | MenuComponent<T>;
+    public modalContainer: HTMLElement;
+    public mask: HTMLElement;
+    public modalWindow: HTMLElement;
+    public modalClose: HTMLElement;
+    public modal: HTMLElement;
+    public modalContent: string;
+    public eventHandlers: EventHandler[];
+    public init(...args: any[]): Promise<any> | void;
+    public render(): void;
+    public beforeUnmount(): void;
+    public destroy(shouldRestoreParentHandlers?: boolean): void;
   }
 
   class HttpService {
-    constructor(token?: string): void;
-    http: {
+    public constructor(token?: string): void;
+    public http: {
       token: string;
       get(url: string): Promise<any>;
       post(url: string, data: any): Promise<any>;
@@ -141,8 +164,8 @@ declare namespace Gpt {
   }
 
   class WsService {
-    constructor(uri: string, updateState: (event?: MessageEvent) => void): void;
-    ws: {
+    public constructor(uri: string, updateState: (event?: MessageEvent) => void): void;
+    public ws: {
       onOpen(event: Event): void;
       onClose(event: Event): void;
       onMessage(event: Event): void;
@@ -204,7 +227,7 @@ declare namespace Gpt {
   }
 
   interface EventHandler {
-    target: HTMLElement;
+    target: HTMLElement | string;
     type: string;
     listener: EventListener;
   }

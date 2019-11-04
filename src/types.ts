@@ -1,5 +1,5 @@
 export interface EventHandler {
-  target: HTMLElement;
+  target: HTMLElement | string;
   type: string;
   listener: EventListener;
 }

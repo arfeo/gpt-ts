@@ -23,7 +23,7 @@ class Draw {
    * @param parentElement
    * @param options
    */
-  static createCanvas(
+  public static createCanvas(
     canvasId: string,
     parentElement: Node,
     options?: Partial<Omit<HTMLCanvasElement, 'id'>>,
@@ -32,8 +32,8 @@ class Draw {
 
     canvasElement.id = canvasId;
 
-    Object.keys(options).map((option: string) => {
-      (canvasElement as { [key: string]: any })[option]  = (options as { [key: string]: any })[option];
+    Object.keys(options).map((option: string): void => {
+      (canvasElement as { [key: string]: any })[option] = (options as { [key: string]: any })[option];
     });
 
     parentElement.appendChild(canvasElement);
@@ -48,8 +48,11 @@ class Draw {
    * @param canvasId
    * @param contextType
    */
-  static getContextByCanvasId(canvasId: string, contextType: string = '2d'): CanvasRenderingContext2D | WebGLRenderingContext | null {
-    return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType);
+  public static getContextByCanvasId(
+    canvasId: string,
+    contextType: string = '2d',
+  ): CanvasRenderingContext2D | WebGLRenderingContext | null {
+    return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType) as CanvasRenderingContext2D | WebGLRenderingContext;
   }
 
   /**
@@ -61,7 +64,7 @@ class Draw {
    * @param radius
    * @param options
    */
-  static circle(
+  public static circle(
     canvasId: string,
     dotX: number,
     dotY: number,
@@ -75,12 +78,16 @@ class Draw {
     ctx.beginPath();
     ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor;
+      ctx.stroke();
+    }
   }
 
   /**
@@ -94,7 +101,7 @@ class Draw {
    * @param endAngle
    * @param options
    */
-  static sector(
+  public static sector(
     canvasId: string,
     dotX: number,
     dotY: number,
@@ -113,12 +120,16 @@ class Draw {
     ctx.lineTo(dotX, dotY);
     ctx.closePath();
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor;
+      ctx.stroke();
+    }
   }
 
   /**
@@ -132,7 +143,7 @@ class Draw {
    * @param endAngle
    * @param options
    */
-  static arc(
+  public static arc(
     canvasId: string,
     cx: number,
     cy: number,
@@ -148,12 +159,16 @@ class Draw {
     ctx.beginPath();
     ctx.arc(cx, cy, radius, startAngle, endAngle);
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor;
+      ctx.stroke();
+    }
   }
 
   /**
@@ -167,7 +182,7 @@ class Draw {
    * @param angle
    * @param options
    */
-  static lineToAngle(
+  public static lineToAngle(
     canvasId: string,
     x1: number,
     y1: number,
@@ -183,13 +198,15 @@ class Draw {
     const x2 = x1 + length * Math.cos(a);
     const y2 = y1 + length * Math.sin(a);
 
-    ctx.strokeStyle = lineColor || 'rgb(0, 0, 0)';
-    ctx.lineWidth = lineWidth || 1;
+    if (lineWidth) {
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = lineColor;
 
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
 
     return [
       [x1, y1],
@@ -207,7 +224,7 @@ class Draw {
    * @param height
    * @param options
    */
-  static rectangle(
+  public static rectangle(
     canvasId: string,
     left: number,
     top: number,
@@ -219,12 +236,16 @@ class Draw {
 
     const ctx: CanvasRenderingContext2D = (document.getElementById(canvasId) as HTMLCanvasElement).getContext('2d');
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fillRect(left, top, width, height);
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(left, top, width, height);
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.strokeRect(left, top, width, height);
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor;
+      ctx.stroke();
+    }
   }
 
   /**
@@ -236,7 +257,7 @@ class Draw {
    * @param c3
    * @param options
    */
-  static triangle(
+  public static triangle(
     canvasId: string,
     c1: number[],
     c2: number[],
@@ -253,12 +274,16 @@ class Draw {
     ctx.lineTo(c3[0], c3[1]);
     ctx.closePath();
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor;
+      ctx.stroke();
+    }
   }
 
   /**
@@ -272,7 +297,7 @@ class Draw {
    * @param innerRadius
    * @param options
    */
-  static star(
+  public static star(
     canvasId: string,
     cx: number,
     cy: number,
@@ -309,12 +334,16 @@ class Draw {
     ctx.lineTo(cx, cy - outerRadius);
     ctx.closePath();
 
-    ctx.lineWidth = edgingWidth || 1;
-    ctx.strokeStyle = edgingColor || 'rgba(0, 0, 0, 0)';
-    ctx.stroke();
+    if (edgingWidth) {
+      ctx.lineWidth = edgingWidth;
+      ctx.strokeStyle = edgingColor;
+      ctx.stroke();
+    }
 
-    ctx.fillStyle = fillColor || 'rgb(255, 255, 255)';
-    ctx.fill();
+    if (fillColor) {
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
   }
 }
 
