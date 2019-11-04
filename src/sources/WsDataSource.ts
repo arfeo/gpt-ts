@@ -20,30 +20,30 @@ class WsDataSource implements IWsDataSource {
     this.socket.onerror = this.onError.bind(this);
   }
 
-  public onOpen() {
+  public onOpen(): void {
     // ...
   }
 
-  public onClose() {
+  public onClose(): void {
     this.socket = null;
 
     typeof this.updateState === 'function' && this.updateState();
   }
 
-  public onMessage(event: MessageEvent) {
+  public onMessage(event: MessageEvent): void {
     typeof this.updateState === 'function' && this.updateState(event);
   }
 
-  public onError(event: Event) {
+  public onError(event: Event): void {
     this.socket.readyState === 1 && console.error(`WS error: ${event.type}`);
   }
 
-  public send(data: string) {
+  public send(data: string): void {
     this.socket.send(data);
   }
 }
 
 export {
   WsDataSource,
-  IWsDataSource
+  IWsDataSource,
 };

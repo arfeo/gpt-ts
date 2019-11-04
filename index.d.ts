@@ -2,7 +2,7 @@ export = Gpt;
 export as namespace Gpt;
 
 declare namespace Gpt {
-  class Draw {
+  export class Draw {
     public static createCanvas(
       canvasId: string,
       parentElement: Node,
@@ -79,7 +79,7 @@ declare namespace Gpt {
     ): void;
   }
 
-  class Maths {
+  export class Maths {
     public static lineSegmentsIntersect(
       segment1: LineSegment,
       segment2: LineSegment,
@@ -97,19 +97,19 @@ declare namespace Gpt {
     ): boolean;
   }
 
-  class Storage {
+  export class Storage {
     public static getData(key: string): any;
     public static saveData(key: string, data: any): void;
     public static removeData(key: string): void;
   }
 
-  class Utils {
+  export class Utils {
     public static getCellSize(vmin: number): number;
     public static getRandomNum(min?: number, max?: number, discard?: number[]): number;
     public static isElement(value: any): boolean;
   }
 
-  class GameComponent<T = {}> {
+  export class GameComponent<T = {}> {
     public constructor(...args: any[]): void;
     public services: T;
     public eventHandlers: EventHandler[];
@@ -121,7 +121,7 @@ declare namespace Gpt {
     public destroy(): void;
   }
 
-  class MenuComponent<T = {}> {
+  export class MenuComponent<T = {}> {
     public constructor(...args: any[]): void;
     public services: T;
     public root: HTMLElement;
@@ -131,8 +131,8 @@ declare namespace Gpt {
     public destroy(): void;
   }
 
-  class ModalComponent<T = {}> {
-    public constructor(
+  export class ModalComponent<T = {}> {
+    protected constructor(
       page: GameComponent<T> | MenuComponent<T>,
       text?: string,
       size?: 'large' | 'medium' | 'small',
@@ -152,7 +152,7 @@ declare namespace Gpt {
     public destroy(shouldRestoreParentHandlers?: boolean): void;
   }
 
-  class HttpService {
+  export class HttpService {
     public constructor(token?: string): void;
     public http: {
       token: string;
@@ -163,7 +163,7 @@ declare namespace Gpt {
     };
   }
 
-  class WsService {
+  export class WsService {
     public constructor(uri: string, updateState: (event?: MessageEvent) => void): void;
     public ws: {
       onOpen(event: Event): void;
@@ -174,33 +174,33 @@ declare namespace Gpt {
     };
   }
 
-  interface DrawCommonOptions {
-    fillColor?: string,
-    edgingWidth?: number,
-    edgingColor?: string,
-    lineColor?: string,
-    lineWidth?: number,
+  export interface DrawCommonOptions {
+    fillColor?: string;
+    edgingWidth?: number;
+    edgingColor?: string;
+    lineColor?: string;
+    lineWidth?: number;
   }
 
-  type DrawCircleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-  type DrawSectorOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-  type DrawArcOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-  type DrawLineToAngleOptions = Pick<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-  type DrawRectangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-  type DrawTriangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-  type DrawStarOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawCircleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawSectorOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawArcOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawLineToAngleOptions = Pick<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawRectangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawTriangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+  export type DrawStarOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
 
   export interface LineSegment {
     start: Point;
     end: Point;
   }
 
-  interface Point {
+  export interface Point {
     x: number;
     y: number;
   }
 
-  interface MenuItem {
+  export interface MenuItem {
     id?: string;
     type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
     name?: string;
@@ -214,19 +214,19 @@ declare namespace Gpt {
     action?: MenuItemAction;
   }
 
-  interface MenuItemOption {
+  export interface MenuItemOption {
     value: string;
     text: string;
     label?: string;
     selected?: boolean;
   }
 
-  interface MenuItemAction {
+  export interface MenuItemAction {
     type: string;
     handler: EventListener;
   }
 
-  interface EventHandler {
+  export interface EventHandler {
     target: HTMLElement | string;
     type: string;
     listener: EventListener;
