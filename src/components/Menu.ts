@@ -30,7 +30,7 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
   public root: HTMLElement;
   public items: MenuItem[];
 
-  public async beforeMount(...args: any[]): Promise<void> {
+  protected async beforeMount(...args: any[]): Promise<void> {
     this.eventHandlers = [];
     this.items = [];
 
