@@ -126,7 +126,7 @@ declare namespace Gpt {
     public services: T;
     public root: HTMLElement;
     public items: MenuItem[];
-    public init(): Promise<any> | void;
+    public init(...args: any[]): Promise<any> | void;
     public beforeUnmount(): void;
     public destroy(): void;
   }
