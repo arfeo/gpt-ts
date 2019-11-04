@@ -23,7 +23,7 @@ class Draw {
    * @param parentElement
    * @param options
    */
-  static createCanvas(
+  public static createCanvas(
     canvasId: string,
     parentElement: Node,
     options?: Partial<Omit<HTMLCanvasElement, 'id'>>,
@@ -32,8 +32,8 @@ class Draw {
 
     canvasElement.id = canvasId;
 
-    Object.keys(options).map((option: string) => {
-      (canvasElement as { [key: string]: any })[option]  = (options as { [key: string]: any })[option];
+    Object.keys(options).map((option: string): void => {
+      (canvasElement as { [key: string]: any })[option] = (options as { [key: string]: any })[option];
     });
 
     parentElement.appendChild(canvasElement);
@@ -48,7 +48,7 @@ class Draw {
    * @param canvasId
    * @param contextType
    */
-  static getContextByCanvasId(
+  public static getContextByCanvasId(
     canvasId: string,
     contextType: string = '2d',
   ): CanvasRenderingContext2D | WebGLRenderingContext | null {
@@ -64,7 +64,7 @@ class Draw {
    * @param radius
    * @param options
    */
-  static circle(
+  public static circle(
     canvasId: string,
     dotX: number,
     dotY: number,
@@ -85,7 +85,7 @@ class Draw {
 
     if (edgingWidth) {
       ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = edgingColor;
       ctx.stroke();
     }
   }
@@ -101,7 +101,7 @@ class Draw {
    * @param endAngle
    * @param options
    */
-  static sector(
+  public static sector(
     canvasId: string,
     dotX: number,
     dotY: number,
@@ -127,7 +127,7 @@ class Draw {
 
     if (edgingWidth) {
       ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = edgingColor;
       ctx.stroke();
     }
   }
@@ -143,7 +143,7 @@ class Draw {
    * @param endAngle
    * @param options
    */
-  static arc(
+  public static arc(
     canvasId: string,
     cx: number,
     cy: number,
@@ -166,7 +166,7 @@ class Draw {
 
     if (edgingWidth) {
       ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = edgingColor;
       ctx.stroke();
     }
   }
@@ -182,7 +182,7 @@ class Draw {
    * @param angle
    * @param options
    */
-  static lineToAngle(
+  public static lineToAngle(
     canvasId: string,
     x1: number,
     y1: number,
@@ -200,7 +200,7 @@ class Draw {
 
     if (lineWidth) {
       ctx.lineWidth = lineWidth;
-      ctx.strokeStyle = lineColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = lineColor;
 
       ctx.beginPath();
       ctx.moveTo(x1, y1);
@@ -224,7 +224,7 @@ class Draw {
    * @param height
    * @param options
    */
-  static rectangle(
+  public static rectangle(
     canvasId: string,
     left: number,
     top: number,
@@ -243,7 +243,7 @@ class Draw {
 
     if (edgingWidth) {
       ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = edgingColor;
       ctx.stroke();
     }
   }
@@ -257,7 +257,7 @@ class Draw {
    * @param c3
    * @param options
    */
-  static triangle(
+  public static triangle(
     canvasId: string,
     c1: number[],
     c2: number[],
@@ -281,7 +281,7 @@ class Draw {
 
     if (edgingWidth) {
       ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = edgingColor;
       ctx.stroke();
     }
   }
@@ -297,7 +297,7 @@ class Draw {
    * @param innerRadius
    * @param options
    */
-  static star(
+  public static star(
     canvasId: string,
     cx: number,
     cy: number,
@@ -336,7 +336,7 @@ class Draw {
 
     if (edgingWidth) {
       ctx.lineWidth = edgingWidth;
-      ctx.strokeStyle = edgingColor || 'rgb(0, 0, 0)';
+      ctx.strokeStyle = edgingColor;
       ctx.stroke();
     }
 

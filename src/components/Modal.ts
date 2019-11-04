@@ -6,19 +6,19 @@ import { Utils } from '../classes';
 import { EventHandler } from '../types';
 
 export abstract class ModalComponent<T = {}> {
-  parent: GameComponent<T> | MenuComponent<T>;
-  modalContainer: HTMLElement;
-  mask: HTMLElement;
-  modalWindow: HTMLElement;
-  modalClose: HTMLElement;
-  modal: HTMLElement;
-  modalContent: string;
-  eventHandlers: EventHandler[];
-  init?(...args: any[]): Promise<any> | void;
-  abstract render(): void;
-  beforeUnmount?(): void;
+  public parent: GameComponent<T> | MenuComponent<T>;
+  public modalContainer: HTMLElement;
+  public mask: HTMLElement;
+  public modalWindow: HTMLElement;
+  public modalClose: HTMLElement;
+  public modal: HTMLElement;
+  public modalContent: string;
+  public eventHandlers: EventHandler[];
+  public init?(...args: any[]): Promise<any> | void;
+  public abstract render(): void;
+  public beforeUnmount?(): void;
 
-  protected constructor(
+  public constructor(
     parent: GameComponent<T> | MenuComponent<T>,
     text?: string,
     size?: 'large' | 'medium' | 'small',
@@ -69,13 +69,13 @@ export abstract class ModalComponent<T = {}> {
     });
   }
 
-  async beforeMount(...args: any[]): Promise<void> {
+  public async beforeMount(...args: any[]): Promise<void> {
     typeof this.init === 'function' && await this.init(...args);
 
     return Promise.resolve();
   }
 
-  setUpEventHandlers(): void {
+  public setUpEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
       const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
@@ -88,7 +88,7 @@ export abstract class ModalComponent<T = {}> {
     }
   }
 
-  removeEventHandlers(): void {
+  public removeEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
       const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
@@ -101,7 +101,7 @@ export abstract class ModalComponent<T = {}> {
     }
   }
 
-  destroy(shouldRestoreParentHandlers: boolean = true): void {
+  public destroy(shouldRestoreParentHandlers: boolean = true): void {
     const { eventHandlers: parentEventHandlers } = this.parent;
 
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();

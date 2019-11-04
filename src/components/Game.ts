@@ -3,16 +3,16 @@ import { Utils } from '../classes';
 import { EventHandler } from '../types';
 
 export abstract class GameComponent<T = {}> {
-  services: T;
-  eventHandlers: EventHandler[];
-  init?(...args: any[]): Promise<any> | void;
-  abstract render(): void;
-  beforeUnmount?(): void;
+  public services: T;
+  public eventHandlers: EventHandler[];
+  public init?(...args: any[]): Promise<any> | void;
+  public abstract render(): void;
+  public beforeUnmount?(): void;
 
-  protected constructor(...args: any[]) {
+  public constructor(...args: any[]) {
     this.eventHandlers = [];
 
-    this.beforeMount(...args).then(() => {
+    this.beforeMount(...args).then((): void => {
       typeof this.render === 'function' && this.render();
 
       if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
@@ -21,13 +21,13 @@ export abstract class GameComponent<T = {}> {
     });
   }
 
-  async beforeMount(...args: any[]): Promise<void> {
+  public async beforeMount(...args: any[]): Promise<void> {
     typeof this.init === 'function' && await this.init(...args);
 
     return Promise.resolve();
   }
 
-  setUpEventHandlers(): void {
+  public setUpEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
       const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
@@ -40,7 +40,7 @@ export abstract class GameComponent<T = {}> {
     }
   }
 
-  removeEventHandlers(): void {
+  public removeEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
       const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
@@ -53,7 +53,7 @@ export abstract class GameComponent<T = {}> {
     }
   }
 
-  destroy(): void {
+  public destroy(): void {
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {

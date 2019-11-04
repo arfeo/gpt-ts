@@ -4,7 +4,7 @@ export class Utils {
    * depending on the screen size and the given vmin value;
    * the returned value is rounded to the nearest ten
    */
-  static getCellSize(vmin: number): number {
+  public static getCellSize(vmin: number): number {
     const vpWidth: number = window.innerWidth;
     const vpHeight: number = window.innerHeight;
     const vminCalculated: number = vpWidth >= vpHeight ? (vpHeight / 100) : (vpWidth / 100);
@@ -21,7 +21,7 @@ export class Utils {
    * @param max
    * @param discard
    */
-  static getRandomNum(min: number = 1, max: number = 1000, discard: number[] = []): number {
+  public static getRandomNum(min: number = 1, max: number = 1000, discard: number[] = []): number {
     const num: number = Math.floor(min + Math.random() * (max + 1 - min));
 
     if (discard.indexOf(num) > -1) {
@@ -37,7 +37,7 @@ export class Utils {
    *
    * @param value
    */
-  static isElement(value: any): boolean {
+  public static isElement(value: any): boolean {
     return value instanceof Element || value instanceof HTMLDocument;
   }
 }

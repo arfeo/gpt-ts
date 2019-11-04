@@ -10,7 +10,7 @@ class WsDataSource implements IWsDataSource {
   protected socket: WebSocket;
   protected updateState: (event?: MessageEvent) => void;
 
-  constructor(uri: string, updateState: (event?: MessageEvent) => void) {
+  public constructor(uri: string, updateState: (event?: MessageEvent) => void) {
     this.socket = new WebSocket(uri);
     this.updateState = updateState;
 
@@ -20,25 +20,25 @@ class WsDataSource implements IWsDataSource {
     this.socket.onerror = this.onError.bind(this);
   }
 
-  onOpen() {
+  public onOpen() {
     // ...
   }
 
-  onClose() {
+  public onClose() {
     this.socket = null;
 
     typeof this.updateState === 'function' && this.updateState();
   }
 
-  onMessage(event: MessageEvent) {
+  public onMessage(event: MessageEvent) {
     typeof this.updateState === 'function' && this.updateState(event);
   }
 
-  onError(event: Event) {
+  public onError(event: Event) {
     this.socket.readyState === 1 && console.error(`WS error: ${event.type}`);
   }
 
-  send(data: string) {
+  public send(data: string) {
     this.socket.send(data);
   }
 }

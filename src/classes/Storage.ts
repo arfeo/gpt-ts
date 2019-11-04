@@ -4,7 +4,7 @@ export class Storage {
    *
    * @param key
    */
-  static getData(key: string): any {
+  public static getData(key: string): any {
     try {
       return JSON.parse(window.localStorage.getItem(key));
     } catch (error) {
@@ -18,7 +18,7 @@ export class Storage {
    * @param key
    * @param data
    */
-  static saveData(key: string, data: any): void {
+  public static saveData(key: string, data: any): void {
     try {
       window.localStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
@@ -31,7 +31,7 @@ export class Storage {
    *
    * @param key
    */
-  static removeData(key: string): void {
+  public static removeData(key: string): void {
     try {
       window.localStorage.removeItem(key);
     } catch (error) {

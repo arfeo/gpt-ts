@@ -15,7 +15,7 @@ class Maths {
    * @param segment1
    * @param segment2
    */
-  static lineSegmentsIntersect(segment1: LineSegment, segment2: LineSegment): boolean {
+  public static lineSegmentsIntersect(segment1: LineSegment, segment2: LineSegment): boolean {
     const det: number = (segment1.end.x - segment1.start.x) * (segment2.end.y - segment2.start.y) -
       (segment2.end.x - segment2.start.x) * (segment1.end.y - segment1.start.y);
 
@@ -38,7 +38,7 @@ class Maths {
    * @param point
    * @param tolerance
    */
-  static pointOnLineSegment(segment: LineSegment, point: Point, tolerance: number): boolean {
+  public static pointOnLineSegment(segment: LineSegment, point: Point, tolerance: number): boolean {
     const dxL: number = segment.end.x - segment.start.x;
     const dyL: number = segment.end.y - segment.start.y;
     const dxP: number = point.x - segment.start.x;
@@ -58,7 +58,7 @@ class Maths {
    * @param segment
    * @param rectCoords
    */
-  static lineSegmentIntersectsWithRect(segment: LineSegment, rectCoords: number[]): boolean {
+  public static lineSegmentIntersectsWithRect(segment: LineSegment, rectCoords: number[]): boolean {
     const segment1: LineSegment = {
       start: { x: rectCoords[0], y: rectCoords[1] },
       end: { x: rectCoords[2], y: rectCoords[1] },
@@ -77,10 +77,10 @@ class Maths {
     };
 
     return (
-      this.lineSegmentsIntersect(segment, segment1) ||
-      this.lineSegmentsIntersect(segment, segment2) ||
-      this.lineSegmentsIntersect(segment, segment3) ||
-      this.lineSegmentsIntersect(segment, segment4)
+      this.lineSegmentsIntersect(segment, segment1)
+      || this.lineSegmentsIntersect(segment, segment2)
+      || this.lineSegmentsIntersect(segment, segment3)
+      || this.lineSegmentsIntersect(segment, segment4)
     );
   }
 }

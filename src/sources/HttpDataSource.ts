@@ -7,25 +7,25 @@ interface IHttpDataSource {
 }
 
 class HttpDataSource implements IHttpDataSource {
-  token: string;
+  public token: string;
 
-  constructor(token?: string) {
+  public constructor(token?: string) {
     this.token = token || '';
   }
 
-  get(url: string): Promise<any> {
+  public get(url: string): Promise<any> {
     return this.send(encodeURI(url), 'GET');
   }
 
-  post(url: string, data = {}): Promise<any> {
+  public post(url: string, data = {}): Promise<any> {
     return this.send(encodeURI(url), 'POST', data);
   }
 
-  put(url: string, data = {}): Promise<any> {
+  public put(url: string, data = {}): Promise<any> {
     return this.send(encodeURI(url), 'PUT', data);
   }
 
-  remove(url: string, data = {}): Promise<any> {
+  public remove(url: string, data = {}): Promise<any> {
     return this.send(encodeURI(url), 'DELETE', data);
   }
 
