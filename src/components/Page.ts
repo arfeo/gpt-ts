@@ -2,7 +2,7 @@ import { Utils } from '../classes';
 
 import { EventHandler } from '../types';
 
-export abstract class GameComponent<T = {}> {
+export abstract class PageComponent<T = {}> {
   public services: T;
   public eventHandlers: EventHandler[];
   public init?(...args: any[]): Promise<any> | void;

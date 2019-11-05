@@ -15,7 +15,7 @@ import {
 } from './classes';
 
 import {
-  GameComponent,
+  PageComponent,
   MenuComponent,
   MenuItem,
   MenuItemOption,
@@ -53,7 +53,7 @@ export {
   Point,
   Storage,
   Utils,
-  GameComponent,
+  PageComponent,
   MenuComponent,
   MenuItem,
   MenuItemOption,

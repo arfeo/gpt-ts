@@ -1,4 +1,4 @@
-import { GameComponent } from './Game';
+import { PageComponent } from './Page';
 
 interface MenuItem {
   id?: string;
@@ -26,7 +26,7 @@ interface MenuItemAction {
   handler: EventListener;
 }
 
-abstract class MenuComponent<T = {}> extends GameComponent<T> {
+abstract class MenuComponent<T = {}> extends PageComponent<T> {
   public root: HTMLElement;
   public items: MenuItem[];
 

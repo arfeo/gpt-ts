@@ -1,12 +1,11 @@
-import { GameComponent } from './Game';
-import { MenuComponent } from './Menu';
+import { PageComponent } from './Page';
 
 import { Utils } from '../classes';
 
 import { EventHandler } from '../types';
 
 export abstract class ModalComponent<T = {}> {
-  public parent: GameComponent<T> | MenuComponent<T>;
+  public parent: PageComponent<T>;
   public modalContainer: HTMLElement;
   public mask: HTMLElement;
   public modalWindow: HTMLElement;
@@ -19,7 +18,7 @@ export abstract class ModalComponent<T = {}> {
   public beforeUnmount?(): void;
 
   protected constructor(
-    parent: GameComponent<T> | MenuComponent<T>,
+    parent: PageComponent<T>,
     text?: string,
     size?: 'large' | 'medium' | 'small',
     ...args: any[]
