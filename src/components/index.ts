@@ -1,6 +1,6 @@
 import {
-  GameComponent,
-} from './Game';
+  PageComponent,
+} from './Page';
 
 import {
   MenuComponent,
@@ -14,7 +14,7 @@ import {
 } from './Modal';
 
 export {
-  GameComponent,
+  PageComponent,
   MenuComponent,
   MenuItem,
   MenuItemOption,

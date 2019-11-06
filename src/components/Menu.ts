@@ -1,4 +1,4 @@
-import { GameComponent } from './Game';
+import { PageComponent } from './Page';
 
 interface MenuItem {
   id?: string;
@@ -26,9 +26,21 @@ interface MenuItemAction {
   handler: EventListener;
 }
 
-abstract class MenuComponent<T = {}> extends GameComponent<T> {
+abstract class MenuComponent<T = {}> extends PageComponent<T> {
   public root: HTMLElement;
   public items: MenuItem[];
+
+  private static processElementProps(element: Partial<HTMLInputElement>, menuItem: { [key: string]: any }, props: string[]): Partial<HTMLInputElement> {
+    const elementCopy: Partial<HTMLInputElement> & { [key: string]: any } = element;
+
+    for (const prop of props) {
+      if (menuItem[prop]) {
+        elementCopy[prop] = menuItem[prop];
+      }
+    }
+
+    return elementCopy;
+  }
 
   protected async beforeMount(...args: any[]): Promise<void> {
     this.eventHandlers = [];
@@ -45,7 +57,6 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
     menuContainer.className = 'menuContainer';
 
     this.root.innerHTML = '';
-
     this.root.appendChild(menuContainer);
 
     for (const item of this.items) {
@@ -61,45 +72,18 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
         case 'button':
         case 'text':
         case 'password': {
+          const props: string[] = item.type !== 'button' ? ['type', 'name', 'value', 'placeholder', 'autocomplete'] : ['type', 'name', 'value'];
+
           menuElement = document.createElement('input');
-
-          menuElement.type = item.type;
-
-          if (item.name) {
-            menuElement.name = item.name;
-          }
-
-          if (item.value) {
-            menuElement.value = item.value;
-          }
-
-          if (item.type !== 'button') {
-            if (item.placeholder) {
-              menuElement.placeholder = item.placeholder;
-            }
-
-            if (item.autocomplete) {
-              menuElement.autocomplete = item.autocomplete;
-            }
-          }
+          menuElement = MenuComponent.processElementProps(menuElement, item, props);
           break;
         }
         case 'checkbox':
         case 'radio': {
           menuElement = document.createElement('input');
-
-          menuElement.type = item.type;
-
-          if (item.name) {
-            menuElement.name = item.name;
-          }
-
-          if (item.checked) {
-            menuElement.checked = item.checked;
-          }
+          menuElement = MenuComponent.processElementProps(menuElement, item, ['type', 'name', 'checked']);
 
           elementLabel = document.createElement('label');
-
           elementLabel.htmlFor = `${item.type}-${item.id}`;
           elementLabel.innerHTML = item.label || '';
           break;
@@ -112,37 +96,23 @@ abstract class MenuComponent<T = {}> extends GameComponent<T> {
 
             option.value = opt.value;
             option.text = opt.text;
-
-            if (opt.label) {
-              option.label = opt.label;
-            }
-
             option.selected = opt.selected || false;
 
+            menuElement = MenuComponent.processElementProps(menuElement, item, ['label']);
             menuElement.appendChild(option);
           }
           break;
         }
         case 'html': {
           menuElement = document.createElement('div');
-
-          if (item.value) {
-            menuElement.value = item.value;
-          }
-
+          menuElement = MenuComponent.processElementProps(menuElement, item, ['value']);
           menuElement.innerHTML = item.value || '';
           break;
         }
         default: break;
       }
 
-      if (item.id) {
-        menuElement.id = item.id;
-      }
-
-      if (item.className) {
-        menuElement.className = item.className;
-      }
+      menuElement = MenuComponent.processElementProps(menuElement, item, ['id', 'className']);
 
       menuItem.appendChild(menuElement as Node);
 

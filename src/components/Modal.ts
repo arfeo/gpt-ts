@@ -1,12 +1,11 @@
-import { GameComponent } from './Game';
-import { MenuComponent } from './Menu';
+import { PageComponent } from './Page';
 
 import { Utils } from '../classes';
 
 import { EventHandler } from '../types';
 
 export abstract class ModalComponent<T = {}> {
-  public parent: GameComponent<T> | MenuComponent<T>;
+  public parent: PageComponent<T>;
   public modalContainer: HTMLElement;
   public mask: HTMLElement;
   public modalWindow: HTMLElement;
@@ -19,7 +18,7 @@ export abstract class ModalComponent<T = {}> {
   public beforeUnmount?(): void;
 
   protected constructor(
-    parent: GameComponent<T> | MenuComponent<T>,
+    parent: PageComponent<T>,
     text?: string,
     size?: 'large' | 'medium' | 'small',
     ...args: any[]
@@ -75,7 +74,7 @@ export abstract class ModalComponent<T = {}> {
     return Promise.resolve();
   }
 
-  public setUpEventHandlers(): void {
+  private setUpEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
       const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
@@ -88,7 +87,7 @@ export abstract class ModalComponent<T = {}> {
     }
   }
 
-  public removeEventHandlers(): void {
+  private removeEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
       const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);

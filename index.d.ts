@@ -109,7 +109,7 @@ declare namespace Gpt {
     public static isElement(value: any): boolean;
   }
 
-  export class GameComponent<T = {}> {
+  export class PageComponent<T = {}> {
     public constructor(...args: any[]): void;
     public services: T;
     public eventHandlers: EventHandler[];
@@ -133,12 +133,12 @@ declare namespace Gpt {
 
   export class ModalComponent<T = {}> {
     protected constructor(
-      page: GameComponent<T> | MenuComponent<T>,
+      page: PageComponent<T>,
       text?: string,
       size?: 'large' | 'medium' | 'small',
       ...args: any[]
     ): void;
-    public parent: GameComponent<T> | MenuComponent<T>;
+    public parent: PageComponent<T>;
     public modalContainer: HTMLElement;
     public mask: HTMLElement;
     public modalWindow: HTMLElement;
