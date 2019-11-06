@@ -72,13 +72,10 @@ abstract class MenuComponent<T = {}> extends PageComponent<T> {
         case 'button':
         case 'text':
         case 'password': {
-          menuElement = document.createElement('input');
+          const props: string[] = item.type !== 'button' ? ['type', 'name', 'value', 'placeholder', 'autocomplete'] : ['type', 'name', 'value'];
 
-          menuElement = MenuComponent.processElementProps(
-            menuElement,
-            item,
-            (item.type !== 'button' ? ['type', 'name', 'value', 'placeholder', 'autocomplete'] : ['type', 'name', 'value']),
-          );
+          menuElement = document.createElement('input');
+          menuElement = MenuComponent.processElementProps(menuElement, item, props);
           break;
         }
         case 'checkbox':
