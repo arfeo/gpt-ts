@@ -1,4 +1,4 @@
-interface IHttpDataSource {
+export interface IHttpDataSource {
   token: string;
   get(url: string): Promise<any>;
   post(url: string, data: any): Promise<any>;
@@ -6,7 +6,7 @@ interface IHttpDataSource {
   remove(url: string, data: any): Promise<any>;
 }
 
-class HttpDataSource implements IHttpDataSource {
+export class HttpDataSource implements IHttpDataSource {
   public token: string;
 
   public constructor(token?: string) {
@@ -47,8 +47,3 @@ class HttpDataSource implements IHttpDataSource {
     return response.ok ? Promise.resolve(parsed) : Promise.reject(parsed);
   }
 }
-
-export {
-  HttpDataSource,
-  IHttpDataSource,
-};

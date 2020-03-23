@@ -1,4 +1,4 @@
-interface IWsDataSource {
+export interface IWsDataSource {
   onOpen(event: Event): void;
   onClose(event: Event): void;
   onMessage(event: Event): void;
@@ -6,7 +6,7 @@ interface IWsDataSource {
   send(data: string): void;
 }
 
-class WsDataSource implements IWsDataSource {
+export class WsDataSource implements IWsDataSource {
   protected socket: WebSocket;
   protected updateState: (event?: MessageEvent) => void;
 
@@ -42,8 +42,3 @@ class WsDataSource implements IWsDataSource {
     this.socket.send(data);
   }
 }
-
-export {
-  WsDataSource,
-  IWsDataSource,
-};

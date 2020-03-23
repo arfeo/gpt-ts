@@ -2,7 +2,7 @@ import { Utils } from '../classes';
 
 import { EventHandler } from '../types';
 
-interface Images {
+export interface Images {
   [key: string]: {
     element: HTMLImageElement;
     src: string;
@@ -11,7 +11,7 @@ interface Images {
 
 const DEFAULT_LOOP_TIMEOUT = 4;
 
-abstract class PageComponent<T = {}> {
+export abstract class PageComponent<T = {}> {
   private loopRequestId: number;
   public services: T;
   public eventHandlers: EventHandler[];
@@ -146,8 +146,3 @@ abstract class PageComponent<T = {}> {
     }
   }
 }
-
-export {
-  PageComponent,
-  Images,
-};

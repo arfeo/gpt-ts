@@ -1,6 +1,6 @@
 import { PageComponent } from './Page';
 
-interface MenuItem {
+export interface MenuItem {
   id?: string;
   type: 'button' | 'checkbox' | 'html' | 'password' | 'radio' | 'select' | 'text';
   name?: string;
@@ -14,19 +14,19 @@ interface MenuItem {
   action?: MenuItemAction;
 }
 
-interface MenuItemOption {
+export interface MenuItemOption {
   value: string;
   text: string;
   label?: string;
   selected?: boolean;
 }
 
-interface MenuItemAction {
+export interface MenuItemAction {
   type: string;
   handler: EventListener;
 }
 
-abstract class MenuComponent<T = {}> extends PageComponent<T> {
+export abstract class MenuComponent<T = {}> extends PageComponent<T> {
   public root: HTMLElement;
   public items: MenuItem[];
 
@@ -130,10 +130,3 @@ abstract class MenuComponent<T = {}> extends PageComponent<T> {
     }
   }
 }
-
-export {
-  MenuComponent,
-  MenuItem,
-  MenuItemOption,
-  MenuItemAction,
-};

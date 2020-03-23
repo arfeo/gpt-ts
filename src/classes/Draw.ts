@@ -1,4 +1,4 @@
-interface DrawCommonOptions {
+export interface DrawCommonOptions {
   fillColor?: string;
   edgingWidth?: number;
   edgingColor?: string;
@@ -6,15 +6,15 @@ interface DrawCommonOptions {
   lineWidth?: number;
 }
 
-type DrawCircleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-type DrawSectorOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-type DrawArcOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-type DrawLineToAngleOptions = Pick<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-type DrawRectangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-type DrawTriangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
-type DrawStarOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawCircleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawSectorOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawArcOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawLineToAngleOptions = Pick<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawRectangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawTriangleOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
+export type DrawStarOptions = Omit<DrawCommonOptions, 'lineColor' | 'lineWidth'>;
 
-class Draw {
+export class Draw {
   /**
    * Creates an instance of the element for the 'canvas' tag;
    * returns the instance
@@ -50,7 +50,7 @@ class Draw {
    */
   public static getContextByCanvasId(
     canvasId: string,
-    contextType: string = '2d',
+    contextType = '2d',
   ): CanvasRenderingContext2D | WebGLRenderingContext | null {
     return (document.getElementById(canvasId) as HTMLCanvasElement).getContext(contextType) as CanvasRenderingContext2D | WebGLRenderingContext;
   }
@@ -346,15 +346,3 @@ class Draw {
     }
   }
 }
-
-export {
-  Draw,
-  DrawCommonOptions,
-  DrawCircleOptions,
-  DrawSectorOptions,
-  DrawArcOptions,
-  DrawRectangleOptions,
-  DrawTriangleOptions,
-  DrawStarOptions,
-  DrawLineToAngleOptions,
-};

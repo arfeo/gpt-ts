@@ -1,14 +1,14 @@
-interface LineSegment {
+export interface LineSegment {
   start: Point;
   end: Point;
 }
 
-interface Point {
+export interface Point {
   x: number;
   y: number;
 }
 
-class Maths {
+export class Maths {
   /**
    * Returns true if one line segment intersects with another
    *
@@ -84,9 +84,3 @@ class Maths {
     );
   }
 }
-
-export {
-  Maths,
-  LineSegment,
-  Point,
-};
