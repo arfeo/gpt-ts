@@ -44,7 +44,7 @@ export class Storage {
   public static saveData(storageName: string, key: string, data: any, onError?: (error: string) => void): void {
     try {
       window.localStorage.setItem(storageName, JSON.stringify({
-        ...Storage.getStorageData(storageName),
+        ...Storage.getData(storageName),
         [key]: data,
       }));
     } catch (error) {
