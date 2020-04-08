@@ -1,15 +1,19 @@
 export class Utils {
   /**
-   * Returns the cell size (atomic canvas measure)
-   * depending on the screen size and the given vmin value;
-   * the returned value is rounded to the nearest ten
+   * Function returns the cell size (atomic canvas measure)
+   * depending on the screen size and the given vmin value.
+   * If the `denom` param passed, the result will be a multiple of it (rounding up).
+   *
+   * @param vmin
+   * @param denom
    */
-  public static getCellSize(vmin: number): number {
+  public static getCellSize(vmin: number, denom?: number): number {
     const vpWidth: number = window.innerWidth;
     const vpHeight: number = window.innerHeight;
-    const vminCalculated: number = vpWidth >= vpHeight ? (vpHeight / 100) : (vpWidth / 100);
+    const vMin: number = vpWidth >= vpHeight ? (vpHeight / 100) : (vpWidth / 100);
+    const result: number = Math.round(vMin * vmin  / 10) * 10;
 
-    return Math.round(vminCalculated * vmin  / 10) * 10;
+    return !denom || result % denom === 0 ? result : denom * (Math.abs(result / denom) + 1);
   }
 
   /**
