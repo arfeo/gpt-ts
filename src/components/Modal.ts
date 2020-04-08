@@ -77,7 +77,9 @@ export abstract class ModalComponent<T = {}> {
   private setUpEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
-      const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
+      const element: HTMLElement = Utils.isElement(target)
+        ? target as HTMLElement
+        : document.getElementById(target as string);
 
       if (!element) {
         break;
@@ -90,7 +92,9 @@ export abstract class ModalComponent<T = {}> {
   private removeEventHandlers(): void {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
-      const element: HTMLElement = Utils.isElement(target) ? target as HTMLElement : document.getElementById(target as string);
+      const element: HTMLElement = Utils.isElement(target)
+        ? target as HTMLElement
+        : document.getElementById(target as string);
 
       if (!element) {
         break;

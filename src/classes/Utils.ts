@@ -80,7 +80,10 @@ export class Utils {
 
     for (let y = 0; y < map.length; y += 1) {
       for (let x = 0; x < map[y].length; x += 1) {
-        if ((typeof type === 'number' && map[y][x] === type) || (Array.isArray(type) && type.indexOf(map[y][x]) > - 1)) {
+        if (
+          (typeof type === 'number' && map[y][x] === type)
+          || (Array.isArray(type) && type.indexOf(map[y][x]) > - 1)
+        ) {
           result.push([y, x]);
         }
       }
@@ -98,9 +101,11 @@ export class Utils {
    * @param value
    */
   public static changeMapValue(boardMap: number[][], x: number, y: number, value: number): number[][] {
-    return boardMap.map((row: number[], rowIndex: number): number[] => row.map((column: number, columnIndex: number): number => {
-      return rowIndex === y && columnIndex === x ? value : boardMap[rowIndex][columnIndex];
-    }));
+    return boardMap.map((row: number[], rowIndex: number): number[] => {
+      return row.map((column: number, columnIndex: number): number => (
+        rowIndex === y && columnIndex === x ? value : boardMap[rowIndex][columnIndex]
+      ));
+    });
   }
 
   /**

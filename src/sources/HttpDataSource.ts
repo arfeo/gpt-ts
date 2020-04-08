@@ -29,9 +29,9 @@ export class HttpDataSource implements IHttpDataSource {
     return this.send(encodeURI(url), 'DELETE', data);
   }
 
-  private send(url: string, method = 'POST', data?: any): Promise<any> {
+  private send(url: string, method: string, data?: any): Promise<any> {
     return fetch(url, {
-      method,
+      method: method || 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         Authorization: this.token,

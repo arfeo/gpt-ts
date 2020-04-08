@@ -9,7 +9,11 @@ export class Storage {
    * @param keys
    * @param onError
    */
-  public static getData(storageName: string, keys?: string[] | string, onError?: (error: string) => void): any[] | any | undefined {
+  public static getData(
+    storageName: string,
+    keys?: string[] | string,
+    onError?: (error: string) => void,
+  ): any[] | any | undefined {
     try {
       const data: any = JSON.parse(window.localStorage.getItem(storageName));
 
@@ -41,7 +45,12 @@ export class Storage {
    * @param data
    * @param onError
    */
-  public static saveData(storageName: string, key: string, data: any, onError?: (error: string) => void): void {
+  public static saveData(
+    storageName: string,
+    key: string,
+    data: any,
+    onError?: (error: string) => void,
+  ): void {
     try {
       window.localStorage.setItem(storageName, JSON.stringify({
         ...Storage.getData(storageName),

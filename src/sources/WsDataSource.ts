@@ -35,7 +35,7 @@ export class WsDataSource implements IWsDataSource {
   }
 
   public onError(event: Event): void {
-    this.socket.readyState === 1 && console.error(`WS error: ${event.type}`);
+    this.socket.readyState === 1 && console.info(`WS error: ${event.type}`);
   }
 
   public send(data: string): void {

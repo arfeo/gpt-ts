@@ -30,7 +30,11 @@ export abstract class MenuComponent<T = {}> extends PageComponent<T> {
   public root: HTMLElement;
   public items: MenuItem[];
 
-  private static processElementProps(element: Partial<HTMLInputElement>, menuItem: { [key: string]: any }, props: string[]): Partial<HTMLInputElement> {
+  private static processElementProps(
+    element: Partial<HTMLInputElement>,
+    menuItem: { [key: string]: any },
+    props: string[],
+  ): Partial<HTMLInputElement> {
     const elementCopy: Partial<HTMLInputElement> & { [key: string]: any } = element;
 
     for (const prop of props) {
@@ -72,7 +76,9 @@ export abstract class MenuComponent<T = {}> extends PageComponent<T> {
         case 'button':
         case 'text':
         case 'password': {
-          const props: string[] = item.type !== 'button' ? ['type', 'name', 'value', 'placeholder', 'autocomplete'] : ['type', 'name', 'value'];
+          const props: string[] = item.type !== 'button'
+            ? ['type', 'name', 'value', 'placeholder', 'autocomplete']
+            : ['type', 'name', 'value'];
 
           menuElement = document.createElement('input');
           menuElement = MenuComponent.processElementProps(menuElement, item, props);
