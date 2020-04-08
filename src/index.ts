@@ -1,12 +1,5 @@
 import {
   Draw,
-  DrawCircleOptions,
-  DrawSectorOptions,
-  DrawArcOptions,
-  DrawLineToAngleOptions,
-  DrawRectangleOptions,
-  DrawTriangleOptions,
-  DrawStarOptions,
   Maths,
   LineSegment,
   Point,
@@ -41,13 +34,6 @@ import {
 
 export {
   Draw,
-  DrawCircleOptions,
-  DrawSectorOptions,
-  DrawArcOptions,
-  DrawLineToAngleOptions,
-  DrawRectangleOptions,
-  DrawTriangleOptions,
-  DrawStarOptions,
   Maths,
   LineSegment,
   Point,

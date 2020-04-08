@@ -1,12 +1,5 @@
 import {
   Draw,
-  DrawCircleOptions,
-  DrawSectorOptions,
-  DrawArcOptions,
-  DrawLineToAngleOptions,
-  DrawRectangleOptions,
-  DrawTriangleOptions,
-  DrawStarOptions,
 } from './Draw';
 
 import {
@@ -25,13 +18,6 @@ import {
 
 export {
   Draw,
-  DrawCircleOptions,
-  DrawSectorOptions,
-  DrawArcOptions,
-  DrawLineToAngleOptions,
-  DrawRectangleOptions,
-  DrawTriangleOptions,
-  DrawStarOptions,
   Maths,
   LineSegment,
   Point,

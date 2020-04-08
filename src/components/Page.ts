@@ -1,12 +1,10 @@
 import { Utils } from '../classes';
 
 import { EventHandler } from '../types';
+import { ImageProps } from '../classes/Draw';
 
 export interface Images {
-  [key: string]: {
-    element: HTMLImageElement;
-    src: string;
-  };
+  [key: string]: ImageProps;
 }
 
 const DEFAULT_LOOP_TIMEOUT = 4;
@@ -46,7 +44,7 @@ export abstract class PageComponent<T = {}> {
     return Promise.resolve();
   }
 
-  private loadImages(images: Images): Promise<void[]> {
+  private loadImages(images: Images): Promise<any[]> {
     if (images === undefined || typeof images !== 'object' || Object.keys(images).length === 0) {
       return Promise.resolve([]);
     }
@@ -59,6 +57,14 @@ export abstract class PageComponent<T = {}> {
       images[key].element.src = images[key].src;
 
       images[key].element.onload = () => {
+        images[key].loaded = true;
+
+        return resolve();
+      };
+
+      images[key].element.onerror = () => {
+        images[key].loaded = false;
+
         return resolve();
       };
     })));
@@ -78,10 +84,10 @@ export abstract class PageComponent<T = {}> {
         start = time;
       }
 
-      this.loopRequestId = requestAnimationFrame(loop);
+      this.loopRequestId = window.requestAnimationFrame(loop);
     };
 
-    this.loopRequestId = requestAnimationFrame(loop);
+    this.loopRequestId = window.requestAnimationFrame(loop);
   }
 
   private processEventHandlers(actionType: 'add' | 'remove'): void {
