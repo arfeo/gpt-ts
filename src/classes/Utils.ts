@@ -36,13 +36,13 @@ export class Utils {
   }
 
   /**
-   * Returns true if the given `value` is a DOM element;
+   * Returns true if the given `value` is a DOM element or Window;
    * otherwise returns false
    *
    * @param value
    */
   public static isElement(value: any): boolean {
-    return value instanceof Element || value instanceof HTMLDocument;
+    return value instanceof Element || value instanceof HTMLDocument || value instanceof Window;
   }
 
   /**
