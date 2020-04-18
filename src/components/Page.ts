@@ -9,15 +9,18 @@ export interface Images {
 
 const DEFAULT_LOOP_TIMEOUT = 4;
 
-export abstract class PageComponent<T = {}> {
+export abstract class PageComponent<TState = {}> {
   private loopRequestId: number;
-  public services: T;
+  public appRoot: HTMLElement;
+  public state: TState;
   public eventHandlers: EventHandler[];
   public images: Images;
   public loopTimeout: number;
   public animations: { [key: string]: number[] | number };
   public init?(...args: any[]): Promise<any> | void;
-  public abstract render(): void;
+  public abstract render(): HTMLElement;
+  public afterUpdate?(): void;
+  public afterMount?(): void;
   public loop?(): void;
   public beforeUnmount?(): void;
 
@@ -28,7 +31,11 @@ export abstract class PageComponent<T = {}> {
 
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
-        typeof this.render === 'function' && this.render();
+        if (typeof this.render === 'function') {
+          this.renderComponent();
+        }
+
+        typeof this.afterMount === 'function' && this.afterMount();
         typeof this.loop === 'function' && this.startLoop(() => this.loop());
 
         if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
@@ -50,8 +57,12 @@ export abstract class PageComponent<T = {}> {
     }
 
     return Promise.all(Object.keys(images).map((key: string): Promise<void> => new Promise((resolve, reject): void => {
-      if (!Object.prototype.hasOwnProperty.call(images, key) || images[key] === undefined) {
+      if (images[key] === undefined) {
         return reject();
+      }
+
+      if (!(images[key].element instanceof Image)) {
+        images[key].element = new Image();
       }
 
       images[key].element.src = images[key].src;
@@ -119,6 +130,13 @@ export abstract class PageComponent<T = {}> {
     }
   }
 
+  private renderComponent(): void {
+    this.appRoot.innerHTML = '';
+    this.appRoot.appendChild(this.render());
+
+    typeof this.afterUpdate === 'function' && this.afterUpdate();
+  }
+
   public setUpEventHandlers(): void {
     this.processEventHandlers('add');
   }
@@ -127,21 +145,35 @@ export abstract class PageComponent<T = {}> {
     this.processEventHandlers('remove');
   }
 
+  public setState<K extends keyof TState>(state: (Pick<TState, K> | TState | null)): void {
+    this.state = {
+      ...this.state,
+      ...state,
+    };
+
+    if (typeof this.render === 'function' && this.shouldUpdate(this.state)) {
+      this.renderComponent();
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public shouldUpdate(state: TState): boolean {
+    return true;
+  }
+
   public destroy(): void {
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();
 
-    if (typeof this.animations === 'object' && Object.keys(this.animations).length > 0) {
-      Object.keys(this.animations).forEach((key: string): void => {
-        if (Object.prototype.hasOwnProperty.call(this.animations, key)) {
-          const item: number[] | number = this.animations[key];
+    if (typeof this.animations === 'object') {
+      Object.keys(this.animations).forEach((key: string) => {
+        const item: number[] | number = this.animations[key];
 
-          typeof item === 'number' && window.cancelAnimationFrame(item as number);
-
-          if (Array.isArray(item)) {
-            for (const requestId of item) {
-              typeof requestId === 'number' && window.cancelAnimationFrame(requestId);
-            }
+        if (Array.isArray(item)) {
+          for (const requestId of item) {
+            typeof requestId === 'number' && window.cancelAnimationFrame(requestId);
           }
+        } else {
+          typeof item === 'number' && window.cancelAnimationFrame(item);
         }
       });
     }
