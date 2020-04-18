@@ -1,46 +1,38 @@
 import { PageComponent } from './Page';
 
+import { EventHandler } from '../types';
 import { Utils } from '../classes';
 
-import { EventHandler } from '../types';
+export type ModalSize = 'large' | 'medium' | 'small';
 
-export abstract class ModalComponent<T = {}> {
-  public parent: PageComponent<T>;
-  public modalContainer: HTMLElement;
-  public mask: HTMLElement;
-  public modalWindow: HTMLElement;
-  public modalClose: HTMLElement;
-  public modal: HTMLElement;
-  public modalContent: string;
-  public eventHandlers: EventHandler[];
+export abstract class ModalComponent {
+  protected parent: PageComponent;
+  protected modalContainer: HTMLElement;
+  protected mask: HTMLElement;
+  protected modalWindow: HTMLElement;
+  protected modalClose: HTMLElement;
+  protected modal: HTMLElement;
+  protected modalContent: string;
+  protected eventHandlers: EventHandler[];
   public init?(...args: any[]): Promise<any> | void;
-  public abstract render(): void;
+  public abstract render(): HTMLElement;
   public beforeUnmount?(): void;
 
-  protected constructor(
-    parent: PageComponent<T>,
-    text?: string,
-    size?: 'large' | 'medium' | 'small',
-    ...args: any[]
-  ) {
+  protected constructor(parent: PageComponent, text?: string, size?: ModalSize, ...args: any[]) {
     this.parent = parent;
-
     this.eventHandlers = [];
 
     this.modalContainer = document.createElement('div');
-    this.modalContainer.className = 'modal-container';
-
     this.mask = document.createElement('div');
-    this.mask.className = 'mask';
-
     this.modalWindow = document.createElement('div');
+    this.modalClose = document.createElement('div');
+    this.modal = document.createElement('div');
+
+    this.modalContainer.className = 'modal-container';
+    this.mask.className = 'mask';
     this.modalWindow.classList.add('modal-window');
     this.modalWindow.classList.add(size || 'medium');
-
-    this.modalClose = document.createElement('div');
     this.modalClose.className = 'modal-close';
-
-    this.modal = document.createElement('div');
     this.modal.className = 'modal';
 
     document.body.appendChild(this.modalContainer);
@@ -60,7 +52,9 @@ export abstract class ModalComponent<T = {}> {
     this.modalClose.addEventListener('click', this.destroy.bind(this));
 
     this.beforeMount(...args).then((): void => {
-      typeof this.render === 'function' && this.render();
+      if (typeof this.render === 'function') {
+        this.renderComponent();
+      }
 
       if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
         this.setUpEventHandlers();
@@ -74,9 +68,14 @@ export abstract class ModalComponent<T = {}> {
     return Promise.resolve();
   }
 
-  private setUpEventHandlers(): void {
+  private processEventHandlers(actionType: 'add' | 'remove'): void {
+    if (!Array.isArray(this.eventHandlers) || this.eventHandlers.length === 0) {
+      return;
+    }
+
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
+
       const element: HTMLElement = Utils.isElement(target)
         ? target as HTMLElement
         : document.getElementById(target as string);
@@ -85,26 +84,33 @@ export abstract class ModalComponent<T = {}> {
         break;
       }
 
-      element.addEventListener(type, listener);
+      switch (actionType) {
+        case 'add':
+          element.addEventListener(type, listener);
+          break;
+        case 'remove':
+          element.removeEventListener(type, listener);
+          break;
+        default:
+          break;
+      }
     }
+  }
+
+  private renderComponent(): void {
+    this.modal.innerHTML = '';
+    this.modal.appendChild(this.render());
+  }
+
+  private setUpEventHandlers(): void {
+    this.processEventHandlers('add');
   }
 
   private removeEventHandlers(): void {
-    for (const prop of this.eventHandlers) {
-      const { target, type, listener } = prop;
-      const element: HTMLElement = Utils.isElement(target)
-        ? target as HTMLElement
-        : document.getElementById(target as string);
-
-      if (!element) {
-        break;
-      }
-
-      element.removeEventListener(type, listener);
-    }
+    this.processEventHandlers('remove');
   }
 
-  public destroy(shouldRestoreParentHandlers = true): void {
+  public destroy(restoreParentHandlers = true): void {
     const { eventHandlers: parentEventHandlers } = this.parent;
 
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();
@@ -115,7 +121,7 @@ export abstract class ModalComponent<T = {}> {
 
     this.modalContainer.remove();
 
-    if (shouldRestoreParentHandlers && Array.isArray(parentEventHandlers) && parentEventHandlers.length > 0) {
+    if (restoreParentHandlers && Array.isArray(parentEventHandlers) && parentEventHandlers.length > 0) {
       this.parent.setUpEventHandlers.call(this.parent);
     }
   }
